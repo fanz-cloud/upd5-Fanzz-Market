@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MarketFanzz- Ultimate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --bg: #020617; --card: #1e293b; --accent: #22d3ee; --text: #f1f5f9; --grad: linear-gradient(135deg, #0ea5e9, #6366f1); }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { margin: 0; background: var(--bg); color: var(--text); padding-bottom: 120px; overflow-x: hidden; }
+
+        /* LOGIN */
+        #login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .login-box { background: var(--card); padding: 30px; border-radius: 20px; width: 100%; max-width: 350px; text-align: center; border: 1px solid var(--accent); box-shadow: 0 0 30px rgba(34, 211, 238, 0.2); }
+
+        header { background: rgba(15, 23, 42, 0.8); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        #header-jam { font-weight: 800; color: var(--accent); font-size: 14px; }
+
+
+        .section-title { font-size: 11px; font-weight: 800; margin: 20px 0 10px; color: var(--accent); text-transform: uppercase; border-left: 3px solid var(--accent); padding-left: 8px; }
+        .input-box { background: var(--card); padding: 15px; border-radius: 15px; }
+        input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #334155; background: #0f172a; color: white; margin-bottom: 8px; outline: none; }
+        
+        .btn-cek { background: var(--grad); color: white; border: none; padding: 0 15px; border-radius: 10px; font-weight: 800; cursor: pointer; }
+
+        .pay-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .pay-card { background: var(--card); padding: 12px 5px; border-radius: 12px; text-align: center; cursor: pointer; border: 2px solid transparent; }
+        .pay-card.selected { border-color: var(--accent); background: rgba(34,211,238,0.1); }
+        .pay-card i { font-size: 18px; margin-bottom: 5px; color: var(--accent); }
+        .pay-card div { font-size: 10px; font-weight: 800; }
+        .fee-tag { font-size: 8px; opacity: 0.6; }
+
+        .nav-grid { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
+        .nav-box { background: var(--card); padding: 10px 20px; border-radius: 12px; font-size: 11px; font-weight: 700; white-space: nowrap; cursor: pointer; }
+        .nav-box.active { background: var(--grad); color: white; }
+        
+        #area-layanan { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .layanan-item { background: var(--card); padding: 10px 5px; border-radius: 10px; text-align: center; font-size: 10px; font-weight: 800; cursor: pointer; text-transform: uppercase; }
+        .layanan-item.active { background: var(--grad); }
+
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .card { background: var(--card); padding: 12px; border-radius: 15px; text-align: center; cursor: pointer; border: 2px solid transparent; }
+        .card.selected { border-color: var(--accent); background: rgba(34,211,238,0.1); }
+        .card .price { color: var(--accent); font-size: 11px; font-weight: 800; margin-top: 5px; }
+
+        /* CHATBOT */
+        #chat-btn { position: fixed; bottom: 85px; right: 20px; width: 55px; height: 55px; background: var(--grad); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 3000; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        #chat-box { display: none; position: fixed; bottom: 155px; right: 20px; width: 310px; height: 400px; background: var(--card); border-radius: 20px; z-index: 4000; flex-direction: column; overflow: hidden; border: 1px solid var(--accent); }
+        .chat-h { background: var(--grad); padding: 15px; font-weight: 800; display: flex; justify-content: space-between; }
+        .chat-b { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; background: #0f172a; font-size: 12px; }
+
+        .footer-bar { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(15, 23, 42, 0.95); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); z-index: 2000; }
+
+        /* RUNNING TEXT */
+        .running-text{ width:100%; overflow:hidden; background:rgba(34,211,238,0.1); border:1px solid rgba(34,211,238,0.3); border-radius:10px; margin-bottom:15px; }
+        .running-content{ display:inline-block; white-space:nowrap; padding:8px 0; font-size:11px; font-weight:700; color:var(--accent); animation:scrollText 15s linear infinite; }
+        @keyframes scrollText{ 0%{transform:translateX(100%);} 100%{transform:translateX(-100%);} }
+
+        /* MODAL */
+        #order-modal{ display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:9999; align-items:center; justify-content:center; }
+        .modal-box{ background:var(--card); padding:20px; width:90%; max-width:350px; border-radius:20px; border:1px solid var(--accent); }
+        .modal-btns{ display:flex; gap:10px; margin-top:15px; }
+        .modal-btns button{ flex:1; padding:10px; border-radius:10px; border:none; font-weight:800; cursor:pointer; }
+
+        /* MODAL BACA QURAN */
+        #quran-modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:10001; flex-direction:column; }
+        .quran-h { background:var(--grad); padding:15px; display:flex; justify-content:space-between; align-items:center; }
+        .quran-b { flex:1; overflow-y:auto; padding:20px; background:var(--bg); line-height:2; }
+        .riwayat-box { background: var(--card); border-radius: 15px; padding: 15px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 15px; }
+        
+.riwayat-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 11px; }
+.riwayat-item:last-child { border: none; }
+.status-badge { background: #22c55e; color: white; padding: 2px 6px; border-radius: 4px; font-size: 9px; font-weight: 800; }
+
+.quran-item {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.8));
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+.ayat-badge {
+    background: #10b981;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 800;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+#searchQuran:focus {
+    border-color: #10b981 !important;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.2;
+}
+
+    </style>
+</head>
+
+<body>
+<audio id="adzan-audio" src="https://files.catbox.moe/97p6m0.mp3" preload="auto"></audio>
+
+<div id="order-modal">
+  <div class="modal-box">
+    <h3 style="margin-top:0;color:var(--accent)">Konfirmasi Pesanan</h3>
+    <div id="modal-detail" style="font-size:12px;line-height:1.6;"></div>
+    <div class="modal-btns">
+      <button onclick="closeModal()" style="background:#334155;color:white;">BATAL</button>
+      <button id="btn-confirm" onclick="confirmOrder()" style="background:var(--grad);color:white;">KONFIRMASI</button>
+    </div>
+  </div>
+</div>
+
+<div id="quran-modal">
+    <div class="quran-h">
+        <h3 id="quran-title" style="margin:0; font-size:16px;">Nama Surat</h3>
+        <i class="fas fa-times" onclick="closeQuran()" style="font-size:20px; cursor:pointer;"></i>
+    </div>
+    <div id="quran-bacaan" class="quran-b">
+        <div style="text-align:center; opacity:0.5;">Memuat ayat...</div>
+    </div>
+</div>
+
+<div id="login-overlay">
+    <div class="login-box">
+        <h2 style="margin:0; color:var(--accent)">FANZ<span style="color:white">STORE</span></h2>
+        <p style="font-size:11px; opacity:0.6; margin-bottom:20px">Masuk untuk akses website</p>
+        <input type="text" id="in-nama" placeholder="Masukkan nama...">
+        <button onclick="prosesLogin()" style="width:100%; padding:12px; border-radius:10px; border:none; background:var(--grad); color:white; font-weight:800;">LOGIN</button>
+    </div>
+</div>
+
+<header>
+    <div style="font-weight:800; font-size:1.2rem;">FANZZ<span style="color:var(--accent)">STORE</span></div>
+    <div style="text-align:right">
+        <div style="font-size: 9px; opacity: 0.6;" id="header-tgl"></div>
+        <div id="header-jam">00:00:00</div>
+    </div>
+</header>
+
+<div class="container">
+    <div id="welcome" style="font-weight:700; margin-bottom:15px; font-size:15px">Welcome, <span id="user-display" style="color:var(--accent)">User</span>! 👋</div>
+
+        <div class="riwayat-box">
+            <div class="riwayat-header">
+                <span style="font-size: 10px; font-weight: 800; color:#22d3ee;"><i class="fas fa-history"></i> RIWAYAT</span>
+         <span style="font-size: 10px; color: #ef4444; cursor: pointer; font-weight:bold; float: right;" onclick="hapusRiwayat()">HAPUS</span>
+
+         </div>
+            <div id="list-riwayat">
+                <div style="text-align: center; opacity: 0.5; font-size: 10px; padding: 10px;">Belum ada pesanan</div>
+            </div>
+        </div>
+    </div>
+
+        <div class="running-text">
+        <div class="running-content">
+            Gunakan kode untuk dapat Diskon • Sistem Open 24 Jam • Proses Cepat & Aman • Terima Kasih Sudah Order di FanzStore 🔥
+        </div>
+    </div>
+    
+    <div class="section-title">1. Tujuan</div>
+<div class="input-box">
+<input type="text" id="target" placeholder="ID / No HP...">
+        <div style="display:flex; gap:8px">
+        <input type="text" id="promo" placeholder="Kode Promo" style="margin:0">
+        <button class="btn-cek" onclick="cekPromo()">CEK</button>
+    </div>
+    <div id="promo-msg" style="font-size:10px; margin-top:5px; font-weight:700"></div>
+</div>
+
+   <div id="section-convert" style="display:none; margin-top:20px; padding: 0 15px;">
+    <button onclick="kembaliKeTopup()" style="width:100%; padding:14px; background:#1e293b; color:white; border:1px solid #334155; border-radius:15px; font-weight:800; margin-bottom:20px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px; transition: 0.3s;">
+        <i class="fas fa-arrow-left"></i> KEMBALI
+    </button>
+    
+    <div class="section-title" style="color:#4ade80; border-left-color:#4ade80;">Convert Pulsa</div>
+    <div class="input-box" style="border: 1px solid #4ade80;">
+        <label style="font-size: 10px; font-weight: 800; color: #4ade80; display: block; margin-bottom: 10px; text-align: center;">
+            <i class="fas fa-info-circle"></i> Min 30.000 - Max 1.000.000
+        </label>
+        
+        <select id="cv-operator" onchange="hitungCv()" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #334155; background: #0f172a; color: white; margin-bottom: 10px; font-weight: 700;">
+            <option value="0.8">Telkomsel (Rate 0.8)</option>
+            <option value="0.85">XL / Axis (Rate 0.85)</option>
+            <option value="0.83">Indosat (Rate 0.83)</option>
+            <option value="0.79">Three (Rate 0.79)</option>
+            <option value="0.76">Smartfren (Rate 0.76)</option>
+        </select>
+
+<input type="number" id="cv-nominal" placeholder="Nominal Pulsa" oninput="hitungCv()" style="margin-bottom: 10px; width:100%; padding:12px; border-radius:10px; background:#0f172a; border:1px solid #334155; color:white;">
+
+<input type="number" id="cv-pengirim" placeholder="Pengirim Pulsa (08xx)" style="margin-bottom: 10px; width:100%; padding:12px; border-radius:10px; background:#0f172a; border:1px solid #334155; color:white;">
+</div>
+
+        <div style="background: rgba(74, 222, 128, 0.1); padding: 15px; border-radius: 12px; border: 1px dashed #4ade80; text-align: center;">
+            <div style="font-size: 9px; font-weight: 800; color: #4ade80; opacity: 0.8;">SALDO DITERIMA:</div>
+            <div id="cv-hasil" style="font-size: 20px; font-weight: 800; color: #4ade80;">Rp 0</div>
+        </div>
+        
+        <input type="text" id="cv-rek" placeholder="Rekening / E-Wallet Tujuan" style="margin-top: 15px;">
+        <button onclick="prosesCv()" style="width:100%; padding:14px; background:#4ade80; color:#020617; border:none; border-radius:12px; font-weight:800; margin-top:10px; cursor:pointer;">
+            <i class="fas fa-paper-plane"></i> Tukar pulsa
+        </button>
+    </div>
+</div>
+
+    <div id="section-main-order">
+        <div class="section-title">2. Payment</div>
+        <div class="pay-grid">
+            <div class="pay-card" onclick="setPay('DANA', 500, this)"><i class="fas fa-wallet"></i><div>DANA</div><span class="fee-tag">+500</span></div>
+            <div class="pay-card" onclick="setPay('QRIS', 800, this)"><i class="fas fa-qrcode"></i><div>QRIS</div><span class="fee-tag">+800</span></div>
+            <div class="pay-card" onclick="setPay('CASH', 1000, this)"><i class="fas fa-money-bill-wave"></i><div>CASH</div><span class="fee-tag">+1rb</span></div>
+        </div>
+        
+<div class="section-title">3. Select Category</div>
+        <div class="nav-grid">
+            <div class="nav-box active" onclick="pilihK('game', this)">Top Up</div>
+            <div class="nav-box" onclick="pilihK('Voucher', this)">Voucher</div>
+            <div class="nav-box" onclick="pilihK('pulsa', this)">Pulsa / Data</div>
+            <div class="nav-box" onclick="pilihK('wallet', this)">E-Wallet</div>
+            <div class="nav-box" onclick="pilihK('convert', this)">Convert</div>
+            <div class="nav-box" onclick="pilihK('unchek', this)">Unchek</div>
+            <div class="nav-box" onclick="pilihIslami(this)" style="background: #10b981; color: white;">ISLAMI</div>
+        </div>
+
+        <div class="section-title">4. Select Service</div>
+        <div id="area-layanan"></div>
+
+        <div class="section-title">5. Select Provider</div>
+        <div id="area-nominal" class="grid"></div>
+    </div>
+
+    <div id="section-islami" style="display:none; margin-top:20px;">
+        <button onclick="kembaliKeTopup()" style="width:100%; padding:12px; background:#334155; color:white; border:none; border-radius:12px; font-weight:800; margin-bottom:15px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;">
+            <i class="fas fa-arrow-left"></i> KEMBALI
+        </button>
+        
+        <div class="input-box" style="margin-bottom:15px; border: 1px solid #10b981;">
+            <h4 style="margin:0 0 10px 0; color:#10b981; font-size:12px;"><i class="fas fa-clock"></i> Jadwal Sholat (Jakarta)</h4>
+            <div id="sholat-box" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:10px; font-size:10px; text-align:center;">
+                Memuat jadwal...
+            </div>
+        </div>
+        
+        <div class="section-title" style="color:#10b981; border-left-color:#10b981;">Qur'an By Fanz</div>
+        <div style="margin-bottom: 15px;">
+    <input type="text" id="searchQuran" onkeyup="cariSurat()" placeholder="• Cari nama surat...🔎" 
+        style="width: 100%; padding: 12px 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: var(--card); color: white; font-size: 13px; outline: none;">
+</div>
+        <div id="quran-list" style="display:flex; flex-direction:column; gap:8px; max-height: 400px; overflow-y: auto;">
+            <div style="text-align:center; font-size:12px; opacity:0.6;">Memuat Al-Qur'an...</div>
+        </div>
+    </div>
+    
+<div class="section-title">6. Help Center</div>
+<div style="display: flex; justify-content: space-around; background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid rgba(34, 211, 238, 0.3); margin-bottom: 20px;">
+  
+<div onclick="openSupport()" style="display: flex; flex-direction: column; align-items: center; cursor: pointer; flex: 1;">
+    <div style="margin-bottom: 8px;">
+        <i class="fas fa-headset" style="font-size: 26px; color: var(--accent);"></i>
+    </div>
+    <span style="font-size: 11px; font-weight: 700;">Bantuan</span>
+</div>
+
+  <div style="width: 1px; background: rgba(255,255,255,0.1); height: 40px; align-self: center;"></div>
+
+  <div onclick="openFAQ()" style="display: flex; flex-direction: column; align-items: center; cursor: pointer; flex: 1;">
+    <div style="margin-bottom: 8px;">
+      <i class="fas fa-question-circle" style="font-size: 26px; color: var(--accent);"></i>
+    </div>
+    <span style="font-size: 11px; font-weight: 700;">FAQ</span>
+  </div>
+</div>
+
+
+    <div class="section-title" style="text-align:center; border:none; margin-top:40px">Developer Profile</div>
+    <div class="input-box" style="margin-bottom: 20px; border: 1px solid rgba(34, 211, 238, 0.3);">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div style="width: 50px; height: 50px; background: var(--grad); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-user-code" style="color: white; font-size: 20px;"></i>
+            </div>
+            <div style="font-size: 12px; line-height: 1.5;">
+                <div style="font-weight: 800; color: var(--accent); font-size: 14px;">Faiz R</div>
+                <div style="opacity: 0.8;">Tiers: <span style="font-weight: 600;">SMK</span></div>
+                <div style="opacity: 0.8;">Major: <span style="font-weight: 600;">BD (Bisnis Daring)</span></div>
+                <div style="opacity: 0.8;">Skill: <span style="font-weight: 600;">PROMOTION & SERVICE</span></div>
+                <div style="opacity: 0.8;">Motivation: <span style="font-weight: 600;">BERANI GAGAL UTK MENCAPAI KESUKSESAN</span></div>
+            </div>
+        </div>
+    </div>
+    
+
+</div>
+
+<div id="chat-btn" onclick="toggleChat()"><i class="fas fa-comment-dots" style="color:white; font-size:24px;"></i></div>
+<div id="chat-box">
+    <div class="chat-h"><span>FanzzAI Assistant</span><i class="fas fa-times" onclick="toggleChat()" style="cursor:pointer"></i></div>
+    <div class="chat-b" id="chat-content"></div>
+    <div style="padding:10px; display:flex; gap:5px; background:#1e293b">
+        <input type="text" id="chat-in" placeholder="Ketik bantuan..." style="margin:0; font-size:12px; flex:1">
+        <button onclick="sendChat()" style="background:var(--accent); border:none; border-radius:10px; padding:0 15px; color:white;"><i class="fas fa-paper-plane"></i></button>
+    </div>
+</div>
+
+<div class="footer-bar">
+    <div>
+        <span style="font-size:9px; opacity:0.6;">TOTAL BAYAR</span>
+        <div id="total-txt" style="font-size:18px; font-weight:800; color:var(--accent);">Rp 0</div>
+    </div>
+    <button onclick="orderNow()" style="background:var(--grad); color:white; border:none; padding:12px 25px; border-radius:12px; font-weight:800; cursor:pointer">ORDER</button>
+</div>
+
+<script>
+const DB = {
+    game: {
+        ml:[["5 Diamond",1000],["12 Diamond",3500],["28 Diamond",8000],["36 Diamond",10000],["56 Diamond",15000],["85 Diamond",22500],["100 Diamond",26000],["144 Diamond",38000],["170 Diamond",45500],["240 Diamond",63000],["355 Diamond",93000],["425 Diamond",112000],["514 Diamond",132000],["712 Diamond",183000],["875 Diamond",217000],["1050 Diamond",265500],["1220 Diamond",309000],["1453 Diamond",371000],["1750 Diamond",441000],["2180 Diamond",524000],["2578 Diamond",625000],["4020 Diamond",961000],["7660 Diamond",1839000],["Weekly Diamond Pass",29500],["Twilight Pass",146500],["Starlight Mem Plus",195500]],
+        ff:[["5 Diamond",500],["12 Diamond",1500],["20 Diamond",3000],["30 Diamond",4000],["50 Diamond",7000],["70 Diamond",9000],["100 Diamond",13000],["140 Diamond",19000],["150 Diamond",21000],["210 Diamond",27000],["355 Diamond",48000],["425 Diamond",56000],["500 Diamond",68000],["720 Diamond",95000],["860 Diamond",112000],["1000 Diamond",135000],["1075 Diamond",145000],["1440 Diamond",190000],["1450 Diamond",192000],["2000 Diamond",260000],["2180 Diamond",285000],["3640 Diamond",470000],["7290 Diamond",930000],["Membership Mingguan",28500],["Membership Bulanan",81500],["BP Card",41500]],
+        pubg:[["35 UC",15500],["50 UC",24000],["70 UC",27500],["100 UC",29500],["150 UC",45500],["210 UC",59500],["250 UC",73000],["300 UC",75500],["375 UC",91000],["500 UC",122500],["525 UC",135500],["700 UC",158000],["750 UC",173500],["1000 UC",230500],["1250 UC",350500],["1750 UC",361500],["2500 UC",509000]],
+        cod:[["26 + 5 CP",5500],["53 + 9 CP",10000],["106 + 21 CP",20000],["264 + 53 CP",45500],["528 + 106 CP",94000],["1056 + 317 CP",178500],["1584 + 475 CP",211500]],
+        genshin:[["60 Crystals",12500],["300 + 30 Crystals",59500],["980 + 110 Crystals",179000],["1980 + 260 Crystals",387500],["3280 + 600 Crystals",615500]],
+        aov:[["40 AOV",10500],["90 AOV",19500],["230 AOV",47500],["470 AOV",93500],["950 AOV",187500],["1430 AOV",184000],["2390 AOV",473500]],
+        higgs:[["1B Chip",15000],["2B Chip",30000]]
+    },
+    Voucher: {
+       Googleplay:[["10.000",12000],["20.000",22000],["50.000",53000],["100.000",103000],["150.000",155000],["200.000",205000]],
+       roblox:[["Gift Card IDR 50.000",52000],["Gift Card IDR 65.000",67000],["Gift Card IDR 100.000",102000],["Gift Card IDR 200.000",202000],["Gift card IDR 300.000",302000],["Gift card IDR 500.000",502000]],
+       steam:[["IDR 12K",15000],["IDR 45K",50000]]
+    },
+    pulsa: {
+        telkomsel:[["5.000",6500],["10.000",11500],["15.000",16500],["20.000",21000],["25.000",26000],["30.000",31500],["40.000",41500],["50.000",51000],["60.000",61500],["70.000",71500],["80.000",81500],["100.000",102000],["150.000",152000],["200.000",202000]],
+        xl:[["5.000",6500],["10.000",11500],["15.000",16500],["25.000",26500],["30.000",31500],["40.000",41500],["50.000",51500],["70.000",71500],["80.000",81500],["100.000",101000],["150.000",151500],["200.000",202000]],
+        axis:[["5.000",6500],["10.000",11500],["15.000",16500],["25.000",26500],["30.000",31500],["40.000",41500],["50.000",51500],["100.000",101000],["150.000",151500],["200.000",202000]],
+        indosat:[["5.000",7000],["10.000",12000],["15.000",16000],["20.000",21000],["25.000",25500],["30.000",31000],["40.000",41000],["50.000",51000],["70.000",71000],["80.000",81000],["90.000",91000],["100.000",101000]],
+        tri:[["5.000",6500],["10.000",11500],["15.000",16000],["20.000",21000],["25.000",26000],["30.000",31500],["40.000",41500],["50.000",51000],["70.000",71500],["90.000",91500],["100.000",102000],["125.000",127000],["150.000",152000],["200.000",202000]]
+    },
+    unchek: {
+       biasa:[["15 unch",7000],["50 unch",15000],["60 unch",17000],["70 unch",19000],["100 unch",34000],["200 unch",40000]],
+       premium:[["10 unch",7000],["20 unch",13000],["30 unch",18000],["50 unch",32000],["100 unch",53000],["200 unch",73000]],
+       antizonk:[["10 unch",32000],["15 unch",42000],["20 unch",52000],["25 unch",67000],["30 unch",83000],["50 unch",104000],["100 unch",124000]]
+    },
+    wallet: {
+        dana:[["1.000",1500],["2.000",2500],["3.000",3500],["4.000",4500],["5.000",5500],["10.000",10500],["15.000",15500],["20.000",20500],["25.000",26500],["30.000",31500],["40.000",41500],["50.000",51500],["60.000",61500],["70.000",71500],["80K",81500],["90K",91500],["100.000",102500],["125.000",127500],["150.000",152500],["200.000",202000]],
+        ovo:[["10.000",11500],["15.000",16500],["20.000",21500],["25.000",26500],["30.000",31500],["40.000",41500],["50.000",51500],["60.000",61500],["70.000",71500],["80.000",81500],["90.000",91500],["100.000",102500],["125.000",127500],["150.000",152500],["200.000",202000]],
+        gopay:[["10.000",11500],["15.000",16500],["20.000",21500],["25.000",26500],["30.000",31500],["40.000",41500],["50.000",51500],["60.000",61500],["70.000",71500],["80.000",81500],["90.000",91500],["100.000",102500],["125.000",127500],["150.000",152500],["200.000",202000]],
+        shopeepay:[["10.000",11500],["15.000",16500],["20.000",21500],["25.000",26500],["30.000",31500],["40.000",41500],["50.000",51500],["60.000",61500],["70.000",71500],["80.000",81500],["90.000",91500],["100.000",102500],["125.000",127500],["150.000",152500],["200.000",202000]],
+        Linkaja:[["10.000",11500],["15.000",16500],["20.000",21500],["25.000",26500],["30.000",31500],["35.000",36500],["40.000",41500],["45.000",46500],["50.000",51500],["55.000",56500],["60.000",61500],["65.000",66500],["70.000",71500],["80.000",81500],["90.000",91500],["100.000",101500],["125.000",126500]]
+    }
+};
+
+let price = 0, fee = 0, game = "", item = "", pay = "", disc = 1, sIdx = 0, uName = "user";
+
+function prosesLogin() {
+    let n = document.getElementById('in-nama').value;
+    if(n.length < 2) return alert("Isi namamu dulu wok!");
+    uName = n;
+    document.getElementById('user-display').innerText = n;
+    document.getElementById('login-overlay').style.display = 'none';
+    document.getElementById('chat-content').innerHTML = `<div style="background:#1e293b; padding:10px; border-radius:10px; align-self:flex-start">Welcome to MarketFanz User ${uName}! Saya Asisten FANZZAI untuk membantu & melayani user, Ada yang bisa saya bantu? Ketik <b>PROMO</b>, <b>WAKTU</b>, <b>CARA</b>, <b>WA</b>, <b>LEGAL</b>, <b>METODE</b>.</div>`;
+}
+
+function updateClock() {
+    const now = new Date();
+    document.getElementById('header-jam').innerText = now.toLocaleTimeString('id-ID');
+    document.getElementById('header-tgl').innerText = now.toLocaleDateString('id-ID', {weekday:'long', day:'numeric', month:'short'});
+}
+setInterval(updateClock, 1000);
+
+// --- FITUR ISLAMI ---
+async function pilihIslami(el) {
+    document.querySelectorAll('.nav-box').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('section-main-order').style.display = 'none';
+    document.getElementById('section-islami').style.display = 'block';
+    loadJadwalSholat();
+    loadQuran();
+}
+
+async function loadJadwalSholat() {
+    try {
+        const res = await fetch('https://api.aladhan.com/v1/timingsByCity?city=Jakarta&country=Indonesia&method=4');
+        const d = await res.json();
+        const t = d.data.timings;
+        
+        const box = document.getElementById('sholat-box');
+        box.style.display = 'block'; 
+        box.style.width = '100%';
+
+        box.innerHTML = `
+            <div style="background: linear-gradient(135deg, #1e293b, #10b981); padding: 15px; border-radius: 12px; margin-bottom: 15px; text-align: center; width: 100%; box-sizing: border-box; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                <div id="countdown-label" style="font-size: 11px; text-transform: uppercase; color: #fff; opacity: 0.8; letter-spacing: 1px;">
+                    Menuju Waktu ...
+                </div>
+                <div id="countdown-timer" style="font-size: 32px; font-weight: 800; color: #fff; margin-top: 5px; font-family: monospace;">
+                    00:00:00
+                </div>
+      <button onclick="playTestAdzan()" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; font-size: 10px; padding: 4px 10px; border-radius: 20px; margin-top: 8px; cursor: pointer;">
+       📢 TEST SUARA ADZAN
+   </button>
+            </div>
+
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%;">
+                ${buatKartuKompak('Subuh', t.Fajr)}
+                ${buatKartuKompak('Dzuhur', t.Dhuhr)}
+                ${buatKartuKompak('Ashar', t.Asr)}
+                ${buatKartuKompak('Maghrib', t.Maghrib)}
+                ${buatKartuKompak('Isya', t.Isha)}
+                <div style="grid-column: span 2;">
+                    ${buatKartuKompak('Imsak', t.Imsak)}
+                </div>
+        `;
+
+        if (window.sholatTimer) clearInterval(window.sholatTimer); 
+        
+        window.sholatTimer = setInterval(() => {
+            const next = hitungCountdown(t);
+            const timerEl = document.getElementById('countdown-timer');
+            const labelEl = document.getElementById('countdown-label');
+            
+            if (timerEl) timerEl.innerText = next.countdown;
+            if (labelEl) labelEl.innerText = `Menuju Waktu ${next.nama}`;
+
+            // PENTING: Cek adzan di sini biar akurat tiap detik
+            cekJadwalAdzan(t); 
+        }, 1000);
+
+    } catch(e) { 
+        document.getElementById('sholat-box').innerText = "Gagal memuat jadwal."; 
+    }
+}
+
+async function loadQuran() {
+    const listEksis = document.getElementById('quran-list');
+    try {
+        const res = await fetch('https://equran.id/api/v2/surat');
+        const data = await res.json();
+        let html = "";
+        data.data.forEach(s => {
+            // Kita bersihkan tanda petik di nama surat agar tidak bikin error saat diklik
+            const namaAman = s.namaLatin.replace(/'/g, "\\'");
+            
+            html += `
+            <div onclick="bacaSurat(${s.nomor}, '${namaAman}')" class="menu-item" style="background:#1e293b; padding:12px; border-radius:12px; display:flex; justify-content:space-between; align-items:center; border:1px solid rgba(16,185,129,0.2); margin-bottom:8px; cursor:pointer;">
+                <div style="display:flex; align-items:center; gap:10px; text-align:left;">
+                    <div style="width:25px; height:25px; background:#10b981; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:800; color:white;">${s.nomor}</div>
+                    <div>
+                        <div style="font-size:12px; font-weight:700;">${s.namaLatin}</div>
+                        <div style="font-size:9px; opacity:0.6;">${s.arti} • ${s.jumlahAyat} Ayat</div>
+                    </div>
+                </div>
+                <div style="font-family: serif; font-size: 16px; color: #10b981; font-weight:bold;">${s.nama}</div>
+            </div>`;
+        });
+        listEksis.innerHTML = html;
+    } catch(e) { listEksis.innerHTML = "Gagal memuat Al-Qur'an."; }
+}
+
+function keAngkaArab(n) {
+    const angka = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+    return n.toString().split('').map(digit => angka[digit]).join('');
+}
+
+async function bacaSurat(nomor, nama) {
+    const modal = document.getElementById('quran-modal');
+    const content = document.getElementById('quran-bacaan');
+const res = await fetch(`https://equran.id/api/v2/surat/${nomor}`);
+const d = await res.json();
+
+document.getElementById('quran-title').innerHTML = `
+    <div style="display:flex; align-items:center; gap:8px; width:100%;">
+        <span style="font-size:14px; white-space:nowrap;">Surat ${nama}</span>
+        <button onclick="putarAudio('${d.data.audioFull['05']}')" style="background:rgba(255,255,255,0.2); border:1px solid white; color:white; cursor:pointer; padding:4px 8px; border-radius:6px; font-size:10px; font-weight:700; display:flex; align-items:center; gap:4px;">
+            <i class="fas fa-play" style="font-size:9px;"></i> PLAY
+        </button>
+    </div>
+`;
+
+
+    content.innerHTML = "<div style='text-align:center;'>Memuat ayat...</div>";
+    modal.style.display = 'flex';
+    try {
+
+        let html = "";
+        d.data.ayat.forEach(a => {
+            const noArab = keAngkaArab(a.nomorAyat); // Fungsi konversi angka tetap dipakai
+            
+            html += `
+                <div class="quran-item">
+                    <span class="ayat-badge">AYAT ${a.nomorAyat}</span>
+                    <div style="font-family: serif; font-size: 26px; color: #fff; text-align: right; direction: rtl; line-height: 2.5; margin-bottom:15px;">
+                        ${a.teksArab} 
+                        <span style="display: inline-flex; align-items: center; justify-content: center; width: 35px; height: 35px; border: 2px solid #10b981; border-radius: 50%; font-size: 16px; color: #10b981; margin-right: 10px; vertical-align: middle;">
+                            ${noArab}
+                        </span>
+                    </div>
+                    <div style="font-size: 13px; color: var(--accent); font-style: italic; margin-bottom: 8px;">${a.teksLatin}</div>
+                    <div style="font-size: 12px; color: white; opacity:0.8; line-height:1.5;">"${a.teksIndonesia}"</div>
+                </div>`;
+        });
+        content.innerHTML = html;
+    } catch(e) { content.innerHTML = "Gagal memuat ayat."; }
+}
+
+function closeQuran() { 
+    document.getElementById('quran-modal').style.display = 'none'; 
+}
+// --- AKHIR FITUR ISLAMI ---
+
+function cekPromo() {
+    let c = document.getElementById('promo').value.toUpperCase();
+    let m = document.getElementById('promo-msg');
+    const promoList = { "FANZ78": 0.98, "FANZ19": 0.96, "FANZ66": 0.94, "FANZ18": 0.92, "FANZ75": 0.90, "FANZ77": 0.88, "FANZ95": 0.86, "FANZ23": 0.97, "FANZ73": 0.95, "FANZ32": 0.93, "FANZ56": 0.91, "FANZ85": 0.89, "FANZ58": 0.87, "FANZ98": 0.85 };
+    if(promoList[c] !== undefined) {
+        disc = promoList[c];
+        let persen = Math.round((1 - disc) * 100);
+        m.innerText = `Aktif (${persen}%)`; m.style.color = "#22c55e";
+    } else {
+        disc = 1; m.innerText = "Kode Salah/Sudah dipakai"; m.style.color = "#ef4444";
+    }
+    renderPrice();
+}
+
+function setPay(p, f, el) {
+    document.querySelectorAll('.pay-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected'); pay = p; fee = f; renderPrice();
+}
+
+function pilihK(k, el) {
+    console.log("Membuka Kategori: " + k); // Cek di console log
+
+    const mainOrder = document.getElementById('section-main-order');
+    const convertOrder = document.getElementById('section-convert');
+    const islamiSection = document.getElementById('section-islami');
+
+    // 1. Sembunyikan semuanya dulu secara paksa
+    if(mainOrder) mainOrder.style.setProperty('display', 'none', 'important');
+    if(convertOrder) convertOrder.style.setProperty('display', 'none', 'important');
+    if(islamiSection) islamiSection.style.setProperty('display', 'none', 'important');
+
+    // 2. Atur navigasi tombol aktif
+    document.querySelectorAll('.nav-grid .nav-box').forEach(b => b.classList.remove('active'));
+    if(el) el.classList.add('active');
+
+    // 3. Kondisi klik
+    if (k === 'convert') {
+        console.log("Menampilkan Form Convert...");
+        if(convertOrder) {
+            convertOrder.style.setProperty('display', 'block', 'important');
+        } else {
+            alert("Error: ID section-convert tidak ditemukan di HTML!");
+        }
+    } else if (k === 'islami') {
+        if(islamiSection) islamiSection.style.setProperty('display', 'block', 'important');
+    } else {
+        // Untuk Game, Voucher, Pulsa, Wallet
+        if(mainOrder) mainOrder.style.setProperty('display', 'block', 'important');
+        
+        // Logika Load Database lu
+        let h = "";
+        if(DB && DB[k]) {
+            Object.keys(DB[k]).forEach((g, i) => {
+                h += `<div class="layanan-item ${i==0?'active':''}" onclick="loadNom('${k}','${g}',this)">${g.toUpperCase()}</div>`;
+            });
+            document.getElementById('area-layanan').innerHTML = h;
+            loadNom(k, Object.keys(DB[k])[0], document.querySelector('.layanan-item'));
+        }
+    }
+}
+
+function hitungCv() {
+    // Ambil input dari dropdown rate dan nominal pulsa
+    const rateEl = document.getElementById('cv-operator');
+    const nomEl = document.getElementById('cv-nominal');
+    const hasilEl = document.getElementById('cv-hasil');
+
+    // Pastikan elemen ada supaya tidak error
+    if (rateEl && nomEl && hasilEl) {
+        let rate = parseFloat(rateEl.value);
+        let nominal = parseFloat(nomEl.value) || 0;
+        
+        // Rumus: Nominal x Rate
+        let totalDiterima = nominal * rate;
+
+        // Validasi batas maksimal 1.000.000
+        if (nominal > 1000000) {
+            hasilEl.innerText = "Maksimal Rp 1.000.000!";
+            hasilEl.style.color = "#ef4444"; // Warna merah peringatan
+        } else {
+            // Tampilkan hasil dengan format rupiah
+            hasilEl.innerText = "Rp " + Math.floor(totalDiterima).toLocaleString('id-ID');
+            hasilEl.style.color = "#4ade80"; // Warna hijau cerah
+        }
+    }
+}
+
+// Tambahan fungsi kirim pesan WA biar fitur prosesnya jalan
+function prosesCv() {
+    let nom = document.getElementById('cv-nominal').value;
+    let pengirim = document.getElementById('cv-pengirim').value; // Ini yang baru
+    let rek = document.getElementById('cv-rek').value;
+    let op = document.getElementById('cv-operator').options[document.getElementById('cv-operator').selectedIndex].text;
+    let hasil = document.getElementById('cv-hasil').innerText;
+    
+    // Validasi input
+    if(nom < 30000) return alert("Minimal convert Rp 30.000 bang!");
+    if(pengirim.length < 10) return alert("Masukkan nomor pengirim pulsa yang bener!");
+    if(rek.length < 5) return alert("Isi nomor rekening/e-wallet tujuan dulu!");
+    
+    // Format pesan WhatsApp biar rapi & pro
+    let msg = `*ORDER CONVERT PULSA*%0A`;
+    msg += `----------------------------%0A`;
+    msg += `*Operator:* ${op}%0A`;
+    msg += `*Nominal:* Rp ${parseFloat(nom).toLocaleString('id-ID')}%0A`;
+    msg += `*No. Pengirim:* ${pengirim}%0A`;
+    msg += `*Terima Saldo:* ${hasil}%0A`;
+    msg += `*Tujuan (Rek/E-Wallet):* ${rek}%0A`;
+    msg += `----------------------------%0A`;
+    msg += `_segera diproses Min!_`;
+
+    // Ganti 628123456789 dengan nomor WhatsApp lu sendiri
+    window.open(`https://wa.me/6287819661875?text=${msg}`);
+}
+
+
+function loadNom(k, g, el) {
+    document.querySelectorAll('.layanan-item').forEach(b => b.classList.remove('active'));
+    if(el) el.classList.add('active');
+    game = g;
+    let h = "";
+    
+    // 1. Ambil data dari DB
+    const semuaItem = DB[k][g];
+
+    // 2. Filter Item Membership
+    const listMembership = semuaItem.filter(i => 
+        i[0].toLowerCase().includes('pass') || 
+        i[0].toLowerCase().includes('membership') || 
+        i[0].toLowerCase().includes('starlight') || 
+        i[0].toLowerCase().includes('card') ||
+        i[0].toLowerCase().includes('weekly') ||
+        i[0].toLowerCase().includes('twilight')
+    );
+    
+    // 3. Filter Item Diamond/Reguler
+    const listReguler = semuaItem.filter(i => !listMembership.includes(i));
+
+    // --- RENDER MEMBERSHIP ---
+    if (listMembership.length > 0) {
+        // Judul ini memakai grid-column: 1/-1 agar tidak terjepit kotak
+        h += `<div style="grid-column: 1 / -1; padding: 15px 5px 10px; color: var(--accent); font-weight: 800; font-size: 13px; display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-crown"></i> MEMBERSHIP
+              </div>`;
+        
+        listMembership.forEach(i => {
+            // Kita pakai class "card" supaya bentuknya sama dengan diamond
+            // Tapi kita kasih sedikit border biru cyan agar lebih spesial
+            h += `
+            <div class="card" onclick="setItem('${i[0]}',${i[1]},this)" style="border: 1px solid rgba(34, 211, 238, 0.4); background: rgba(30, 41, 59, 0.8);">
+                <b>${i[0]}</b>
+                <div class="price">Rp ${i[1].toLocaleString()}</div>
+            </div>`;
+        });
+    }
+
+          // --- RENDER DIAMOND / REGULER ---
+    if (listReguler.length > 0) {
+        let judulReguler = (k === 'game') ? 'DIAMOND' : '';
+        h += `<div style="grid-column: 1 / -1; padding: 25px 5px 10px; color: #fff; font-weight: 800; font-size: 13px; display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-bolt"></i> ${judulReguler}
+              </div>`;
+        
+        listReguler.forEach(i => {
+            h += `
+            <div class="card" onclick="setItem('${i[0]}',${i[1]},this)">
+                <b>${i[0]}</b>
+                <div class="price">Rp ${i[1].toLocaleString()}</div>
+            </div>`;
+        });
+    }
+
+    document.getElementById('area-nominal').innerHTML = h;
+}
+
+
+function setItem(n, p, el) {
+    document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    item = n; price = p; renderPrice();
+}
+
+function kembaliKeTopup() {
+    document.getElementById('section-main-order').style.display = 'block';
+    document.getElementById('section-islami').style.display = 'none';
+    const btnGame = document.querySelector('.nav-box');
+    pilihK('game', btnGame);
+}
+
+function renderPrice() {
+    let total = Math.floor(price * disc) + fee;
+    document.getElementById('total-txt').innerText = "Rp " + total.toLocaleString();
+}
+
+function toggleChat() {
+    let b = document.getElementById('chat-box');
+    b.style.display = (b.style.display === 'flex') ? 'none' : 'flex';
+}
+
+function sendChat() {
+    let i = document.getElementById('chat-in'), c = document.getElementById('chat-content'), v = i.value.trim().toUpperCase();
+    if(!v) return;
+    c.innerHTML += `<div style="background:var(--grad); padding:10px; border-radius:10px; align-self:flex-end">${i.value}</div>`;
+    i.value = "";
+    let typing = document.createElement("div");
+    typing.innerHTML = "Mengetik..."; typing.style = "opacity:0.6;font-size:12px;";
+    c.appendChild(typing); c.scrollTop = c.scrollHeight;
+    setTimeout(() => {
+        let r = "";
+        function random(arr){ return arr[Math.floor(Math.random() * arr.length)]; }
+        if(v.includes("PROMO")) r = random(["🔥 Lagi ada diskon! Pakai FANZ73, FANZ75, FANZ98, dll", "Diskon tersedia! Kode hanya bisa dipakai 1x ya."]);
+        else if(v.includes("WAKTU") || v.includes("OPEN")) r = random(["Sistem open 24 jam", "Bisa order kapan aja, sistem otomatis 24 jam.", "Aktif terus bos, kecuali kalau ada gangguan server."]);
+        else if(v.includes("CARA") || v.includes("ORDER")) r = random(["Pilih Game → Masukkan ID → Pilih Pembayaran → Klik Order!", "Tinggal pilih produk, isi ID, bayar, selesai"]);
+        else if(v.includes("ADMIN") || v.includes("WA")) r = random(["Admin aktif, WA: 0877 9523 7332 // 0878 1966 1875", "admin selalu siap bantu jika ada kendala"]);
+        else if(v.includes("AMAN") || v.includes("LEGAL")) r = random(["Trx aman & legal. Data tidak disimpan.", "Sistem kami secure dan terpercaya"]);
+        else if(v.includes("METODE") || v.includes("BAYAR")) r = random(["Payment: QRIS, E-Wallet, Transfer Bank.", "Kami menerima QRIS dan berbagai E-Wallet."]);
+        else r = random(["Maaf saya tidak paham, Coba ketik: promo / cara / waktu", "Keyword belum tersedia."]);
+        typing.remove();
+        c.innerHTML += `<div style="background:#1e293b; padding:10px; border-radius:10px;">${r}</div>`;
+        c.scrollTop = c.scrollHeight;
+    }, 800);
+}
+
+function orderNow() {
+    let id = document.getElementById('target').value.trim();
+    if (!id) return alert("ID belum diisi!");
+    if (!price) return alert("pilih nominal!");
+    if (!pay) return alert("pilih metode bayar!");
+    let detail = `<b>User:</b> ${uName}<br><b>Layanan:</b> ${game.toUpperCase()}<br><b>Item:</b> ${item}<br><b>ID:</b> ${id}<br><b>Bayar:</b> ${pay}<br><b>Total:</b> ${document.getElementById('total-txt').innerText}`;
+    document.getElementById('modal-detail').innerHTML = detail;
+    
+    document.getElementById('order-modal').style.display = 'flex';
+}
+
+function closeModal(){ document.getElementById('order-modal').style.display='none'; }
+
+function confirmOrder(){
+    let btn = document.getElementById("btn-confirm"), id = document.getElementById('target').value;
+    let totalBayar = document.getElementById('total-txt').innerText;
+    btn.innerText = "Memproses..."; btn.disabled = true;
+    
+    // Simpan data ke memori browser
+    const data = JSON.parse(localStorage.getItem('fanz_history')) || [];
+    data.push({ game: game.toUpperCase(), item: item, total: totalBayar });
+    localStorage.setItem('fanz_history', JSON.stringify(data));
+
+    setTimeout(() => {
+        let msg = `ORDER TOPUP%0AUser: ${uName}%0ALayanan: ${game.toUpperCase()}%0AItem: ${item}%0AID: ${id}%0ABayar: ${pay}%0ATotal: ${totalBayar}`;
+        window.open(`https://wa.me/6287795237332?text=${msg}`);
+        btn.innerText = "Konfirmasi"; btn.disabled = false; closeModal();
+        muatRiwayat(); // Update tampilan riwayat
+    }, 1500);
+}
+
+window.onload = () => { 
+    updateClock(); 
+    pilihK('game', document.querySelector('.nav-box')); 
+    muatRiwayat(); 
+};
+
+// 1. Fungsi untuk menampilkan data riwayat dari memori HP ke layar
+function muatRiwayat() {
+    const list = document.getElementById('list-riwayat');
+    // Mengambil data dari localStorage dengan kunci 'fanz_history'
+    const data = JSON.parse(localStorage.getItem('fanz_history')) || [];
+    
+    if (data.length === 0) return;
+
+    let html = "";
+   
+    data.reverse().slice(0, 3).forEach(h => {
+        html += `<div class="riwayat-item">
+            <div>
+                <div style="font-weight:800">${h.game}</div>
+                <div style="opacity:0.6;font-size:9px">${h.item}</div>
+            </div>
+            <div style="text-align:right">
+                <div style="color:var(--accent);font-weight:800">${h.total}</div>
+                <span class="status-badge">SUKSES</span>
+            </div>
+        </div>`;
+    });
+    list.innerHTML = html;
+}
+
+// 2. Fungsi untuk menghapus semua data riwayat yang tersimpan
+function hapusRiwayat() { 
+    if(confirm("Hapus semua riwayat pesanan?")) { 
+        localStorage.removeItem('fanz_history'); 
+        location.reload(); // Refresh halaman agar tampilan kembali bersih
+    } 
+}
+
+function cariSurat() {
+    let input = document.getElementById('searchQuran').value.toLowerCase();
+    let items = document.querySelectorAll('#quran-list > div');
+    items.forEach(item => {
+        let nama = item.innerText.toLowerCase();
+        item.style.display = nama.includes(input) ? "flex" : "none";
+    });
+}
+
+let currentAudio = null;
+let adzanAudio = new Audio('https://files.catbox.moe/6v6p7m.mp3'); 
+let sudahAdzan = { subuh: false, dzuhur: false, ashar: false, maghrib: false, isya: false };
+
+function putarAudio(url) {
+    if (currentAudio) {
+        currentAudio.pause(); // Matikan audio sebelumnya kalau ada yang lagi jalan
+    }
+    currentAudio = new Audio(url);
+    currentAudio.play();
+    alert("Memutar Murottal Syekh Mishary Rashid...");
+}
+
+function cekJadwalAdzan(jadwal) {
+    const sekarang = new Date();
+    const jamMenit = `${sekarang.getHours().toString().padStart(2, '0')}:${sekarang.getMinutes().toString().padStart(2, '0')}`;
+    const detik = sekarang.getSeconds();
+    
+    // Sesuaikan key-nya dengan API
+    const waktuSholat = [jadwal.Fajr, jadwal.Dhuhr, jadwal.Asr, jadwal.Maghrib, jadwal.Isha];
+
+    // Bunyi cuma pas detik ke 0 biar gak spam
+    if (waktuSholat.includes(jamMenit) && detik === 0) {
+        const audio = document.getElementById('adzan-audio');
+        if (audio) {
+            audio.currentTime = 0;
+            audio.play().catch(e => console.log("Audio ketahan browser"));
+            alert("Allahu Akbar! Waktu Sholat " + jamMenit + " telah tiba.");
+        }
+    }
+}
+
+function cekJadwalAdzan(jadwal) {
+    const sekarang = new Date();
+    const jam = sekarang.getHours().toString().padStart(2, '0');
+    const menit = sekarang.getMinutes().toString().padStart(2, '0');
+    const waktuSekarang = `${jam}:${menit}`;
+
+    const daftar = { subuh: jadwal.Fajr, dzuhur: jadwal.Dhuhr, ashar: jadwal.Asr, maghrib: jadwal.Maghrib, isya: jadwal.Isha };
+
+    for (let s in daftar) {
+        if (daftar[s] === waktuSekarang && !sudahAdzan[s]) {
+            adzanAudio.play();
+            sudahAdzan[s] = true;
+            alert("Memasuki waktu sholat " + s.toUpperCase());
+        } else if (daftar[s] !== waktuSekarang) {
+            sudahAdzan[s] = false; 
+        }
+    }
+}
+
+// Update fungsi closeQuran lu yang lama dengan yang ini
+function closeQuran() { 
+    document.getElementById('quran-modal').style.display = 'none'; 
+}
+
+// Fungsi buat bikin baris jadwal pake ikon masjid (Mirip di gambar)
+function buatKartuSholat(nama, waktu) {
+    return `
+        <div style="background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between; padding: 12px 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <span style="font-size: 20px;">🕌</span>
+                <span style="color: #fff; font-weight: 500;">${nama}</span>
+            </div>
+            <div style="background: #3b82f6; color: #fff; padding: 4px 12px; border-radius: 8px; font-weight: bold; font-size: 14px;">
+                ${waktu}
+            </div>
+        </div>`;
+}
+
+function hitungCountdown(jadwal) {
+    const sekarang = new Date();
+    const daftar = { 
+        "Subuh": jadwal.Fajr, 
+        "Dzuhur": jadwal.Dhuhr, 
+        "Ashar": jadwal.Asr, 
+        "Maghrib": jadwal.Maghrib, 
+        "Isya": jadwal.Isha 
+    };
+    
+    let targetNama = "";
+    let waktuTarget = null;
+
+    for (let s in daftar) {
+        const [jam, menit] = daftar[s].split(':');
+        const t = new Date();
+        t.setHours(parseInt(jam), parseInt(menit), 0);
+        if (t > sekarang) {
+            targetNama = s;
+            waktuTarget = t;
+            break;
+        }
+    }
+
+    if (!waktuTarget) {
+        targetNama = "Subuh (Besok)";
+        const [jam, menit] = daftar["Subuh"].split(':');
+        waktuTarget = new Date();
+        waktuTarget.setDate(sekarang.getDate() + 1); 
+        waktuTarget.setHours(parseInt(jam), parseInt(menit), 0);
+    }
+
+    const selisih = waktuTarget - sekarang;
+    const h = Math.floor(selisih / 3600000);
+    const m = Math.floor((selisih % 3600000) / 60000);
+    const sld = Math.floor((selisih % 60000) / 1000);
+    
+    // Tambahkan format 0 didepan angka jika satuan (01, 02, dst)
+    const format = (n) => n.toString().padStart(2, '0');
+    
+    return { 
+        nama: targetNama, 
+        countdown: `${format(h)}:${format(m)}:${format(sld)}` 
+    };
+}
+
+function buatKartuKompak(nama, waktu) {
+    return `
+        <div style="background: rgba(30, 41, 59, 0.7); padding: 12px; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.2); display: flex; flex-direction: column; align-items: center; gap: 5px;">
+            <span style="font-size: 10px; color: #94a3b8; text-transform: uppercase;">${nama}</span>
+            <span style="color: #fff; font-weight: 700; font-size: 16px;">${waktu}</span>
+        </div>`;
+}
+function playTestAdzan() {
+    const audio = document.getElementById('adzan-audio');
+    if (audio) {
+        audio.currentTime = 0; // Reset ke awal
+        audio.play()
+            .then(() => console.log("Adzan diputar!"))
+            .catch(e => {
+                console.error("Gagal putar:", e);
+                alert("Klik dulu di mana saja di layar, baru tekan tombol TEST lagi (Aturan Browser).");
+            });
+    } else {
+        alert("Elemen audio tidak ditemukan!");
+    }
+}
+
+async function prosesTopup() {
+    const target = document.getElementById('target-id').value;
+    const zone = document.getElementById('zone-id') ? document.getElementById('zone-id').value : '';
+
+    if(!target || !item || !pay) {
+        alert("Lengkapi data: ID Game, Nominal, dan Metode Pembayaran!");
+        return;
+    }
+
+    // Munculkan loading agar user tahu sedang diproses
+    alert("Pesanan sedang dibuat, mohon tunggu...");
+
+    try {
+        const response = await fetch('https://alamat-api-server-kamu.com/buat-pesanan', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                user_id: target,
+                zone_id: zone,
+                produk: item, // Diamond apa yang dibeli
+                harga: price,
+                metode: pay   // QRIS, DANA, dll
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            // Jika berhasil, arahkan user ke halaman pembayaran otomatis (Tripay/QRIS)
+            window.location.href = data.checkout_url;
+        } else {
+            alert("Gagal membuat pesanan: " + data.message);
+        }
+    } catch (err) {
+        alert("Terjadi kesalahan sistem. Coba lagi nanti.");
+        console.error(err);
+    }
+}
+
+//Fungsi untuk membuka modal Bantuan
+function openSupport() {
+    document.getElementById('support-modal').style.display = 'flex';
+}
+//Fungsi untuk menutup modal Bantuan
+function closeSupport() {
+    document.getElementById('support-modal').style.display = 'none';
+}
+
+// Tutup modal jika klik area luar (background gelap)
+window.onclick = function(event) {
+    let modalSupport = document.getElementById('support-modal');
+    let modalFAQ = document.getElementById('faq-modal');
+    if (event.target == modalSupport) modalSupport.style.display = "none";
+    if (event.target == modalFAQ) modalFAQ.style.display = "none";
+}
+
+// Fungsi untuk membuka Modal FAQ
+function openFAQ() {
+    document.getElementById('faq-modal').style.display = 'flex';
+}
+
+// Fungsi untuk menutup Modal FAQ
+function closeFAQ() {
+    document.getElementById('faq-modal').style.display = 'none';
+}
+
+// Fungsi untuk buka-tutup pertanyaan (accordion)
+function toggleAccordion(el) {
+    const content = el.nextElementSibling;
+    const icon = el.querySelector('i');
+    if (content.style.display === "block") {
+        content.style.display = "none";
+        icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+    } else {
+        content.style.display = "block";
+        icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+    }
+}
+</script>
+
+<div id="support-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:10002; align-items:center; justify-content:center; padding:20px; backdrop-filter: blur(5px);">
+    <div style="background: var(--card); width: 100%; max-width: 350px; border-radius: 20px; border: 1px solid rgba(34, 211, 238, 0.3); overflow: hidden; animation: zoomIn 0.3s ease;">
+        <div style="background: var(--grad); padding: 20px; text-align: center; position: relative;">
+            <h3 style="margin:0; color: white; font-size: 18px;">Hubungi Kami</h3>
+            <i class="fas fa-times" onclick="closeSupport()" style="position: absolute; top: 15px; right: 15px; color: white; cursor: pointer; font-size: 20px;"></i>
+        </div>
+        
+        <div style="padding: 20px; display: grid; gap: 12px;">
+            <a href="https://wa.me/6287795237332" target="_blank" style="text-decoration:none; display:flex; align-items:center; gap:15px; background:#25d366; padding:12px; border-radius:12px; color:white; font-weight:700; font-size:14px;">
+                <i class="fab fa-whatsapp" style="font-size:24px;"></i> WhatsApp
+            </a>
+            <a href="https:t.me/FanzOfficial32" target="_blank" style="text-decoration:none; display:flex; align-items:center; gap:15px; background:#0088cc; padding:12px; border-radius:12px; color:white; font-weight:700; font-size:14px;">
+                <i class="fab fa-telegram-plane" style="font-size:24px;"></i> Telegram
+            </a>
+            <a href="Belum Tersedia" target="_blank" style="text-decoration:none; display:flex; align-items:center; gap:15px; background:linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); padding:12px; border-radius:12px; color:white; font-weight:700; font-size:14px;">
+                <i class="fab fa-instagram" style="font-size:24px;"></i> Instagram
+            </a>
+            <a href="Belum Tersedia" target="_blank" style="text-decoration:none; display:flex; align-items:center; gap:15px; background:#000000; padding:12px; border-radius:12px; color:white; font-weight:700; font-size:14px; border: 1px solid #333;">
+                <i class="fab fa-tiktok" style="font-size:24px;"></i> TikTok
+            </a>
+            <a href="https://x.com/Fanz_Official77" target="_blank" style="text-decoration:none; display:flex; align-items:center; gap:15px; background:#000000; padding:12px; border-radius:12px; color:white; font-weight:700; font-size:14px;">
+                <i class="fab fa-x-twitter" style="font-size:24px;"></i> Twitter (X)
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+@keyframes zoomIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+</style>
+
+
+<div id="faq-modal" style="display:none; position:fixed; inset:0; background:rgba(2, 6, 23, 0.95); z-index:10001; flex-direction:column; animation: fadeIn 0.3s ease; backdrop-filter: blur(12px);">
+    <div class="quran-h" style="background: var(--grad); padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <h3 style="margin:0; font-size:16px; color: white; font-weight: 800;">FAQ - Pusat Bantuan</h3>
+        <i class="fas fa-times" onclick="closeFAQ()" style="font-size:20px; cursor:pointer; color: white;"></i>
+    </div>
+    
+    <div class="quran-b" style="background: #0f172a; color: #f1f5f9; padding: 15px; overflow-y: auto;">
+        <div style="text-align:center; margin-bottom:20px;">
+            <h2 style="font-size: 18px; color: var(--accent); margin-bottom: 5px; font-weight:800;">Pertanyaan Sering Diajukan</h2>
+            <p style="font-size:11px; color: #94a3b8; margin-bottom: 15px;">Temukan solusi cepat untuk kendala transaksi Anda.</p>
+            
+            <div style="position: relative;">
+                <i class="fas fa-search" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--accent);"></i>
+                <input type="text" id="faqSearch" onkeyup="searchFAQ()" placeholder="Cari bantuan..." 
+                    style="width: 100%; padding: 12px 12px 12px 40px; border-radius: 25px; border: 1px solid rgba(34, 211, 238, 0.2); background: #1e293b; color: white; font-size: 12px; outline: none; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+            </div>
+        </div>
+
+        <div id="faq-list">
+            <div class="faq-item" style="margin-bottom:10px; border:1px solid rgba(255,255,255,0.05); border-radius:15px; background: #1e293b; overflow:hidden;">
+                <div onclick="toggleAccordion(this)" style="padding:15px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                    <span style="font-weight:700; font-size:12px; color: #f1f5f9;">Layanan apa saja yang tersedia?</span>
+                    <i class="fas fa-chevron-down" style="font-size:10px; color: var(--accent); transition: 0.3s;"></i>
+                </div>
+                <div style="display:none; padding:0 15px 15px; font-size:11px; color:#94a3b8; line-height:1.6; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px;">
+                    Kami menyediakan beberapa layanan: <br>
+                    <span style="display:inline-block; background:rgba(34, 211, 238, 0.15); color:var(--accent); padding:3px 8px; border-radius:5px; margin:2px; font-weight:700; font-size:10px;">Game</span>
+                    <span style="display:inline-block; background:rgba(34, 211, 238, 0.15); color:var(--accent); padding:3px 8px; border-radius:5px; margin:2px; font-weight:700; font-size:10px;">Voucher</span>
+                    <span style="display:inline-block; background:rgba(34, 211, 238, 0.15); color:var(--accent); padding:3px 8px; border-radius:5px; margin:2px; font-weight:700; font-size:10px;">Pulsa</span>
+                    <span style="display:inline-block; background:rgba(34, 211, 238, 0.15); color:var(--accent); padding:3px 8px; border-radius:5px; margin:2px; font-weight:700; font-size:10px;">E-Wallet</span>
+                    <span style="display:inline-block; background:rgba(34, 211, 238, 0.15); color:var(--accent); padding:3px 8px; border-radius:5px; margin:2px; font-weight:700; font-size:10px;">Unchek</span>
+                </div>
+            </div>
+
+            <div class="faq-item" style="margin-bottom:10px; border:1px solid rgba(255,255,255,0.05); border-radius:15px; background: #1e293b; overflow:hidden;">
+                <div onclick="toggleAccordion(this)" style="padding:15px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                    <span style="font-weight:700; font-size:12px; color: #f1f5f9;">Apakah proses pengiriman sudah otomatis?</span>
+                    <i class="fas fa-chevron-down" style="font-size:10px; color: var(--accent); transition: 0.3s;"></i>
+                </div>
+                <div style="display:none; padding:10px 15px 15px; font-size:11px; color:#94a3b8; border-top: 1px solid rgba(255,255,255,0.05);">
+                    Belum, web ini belum menyediakan proses secara instan karna tidak ada API + Backend & masih dalam tahap Perkembangan, Tapi anda bisa melakukan trx dg proses manual.
+                </div>
+            </div>
+
+            <div class="faq-item" style="margin-bottom:10px; border:1px solid rgba(255,255,255,0.05); border-radius:15px; background: #1e293b; overflow:hidden;">
+                <div onclick="toggleAccordion(this)" style="padding:15px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                    <span style="font-weight:700; font-size:12px; color: #f1f5f9;">Payment apa saja yg fee admin nya murah?</span>
+                    <i class="fas fa-chevron-down" style="font-size:10px; color: var(--accent); transition: 0.3s;"></i>
+                </div>
+                <div style="display:none; padding:10px 15px 15px; font-size:11px; color:#94a3b8; border-top: 1px solid rgba(255,255,255,0.05);">
+                    Bisa menggunakan Payment QRIS & DANA. Detail biaya akan muncul otomatis di halaman pembayaran sebelum Anda membayar.
+                </div>
+            </div>
+
+            <div class="faq-item" style="margin-bottom:10px; border:1px solid rgba(255,255,255,0.05); border-radius:15px; background: #1e293b; overflow:hidden;">
+                <div onclick="toggleAccordion(this)" style="padding:15px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                    <span style="font-weight:700; font-size:12px; color: #f1f5f9;">Berapa lama waktu Proses?</span>
+                    <i class="fas fa-chevron-down" style="font-size:10px; color: var(--accent); transition: 0.3s;"></i>
+                </div>
+                <div style="display:none; padding:10px 15px 15px; font-size:11px; color:#94a3b8; border-top: 1px solid rgba(255,255,255,0.05);">
+                    Proses 1-5 menit. Jika dalam 10 menit belum masuk, silakan hubungi CS via WhatsApp dengan menyertakan bukti Trx.
+                </div>
+            </div>
+
+            <div class="faq-item" style="margin-bottom:10px; border:1px solid rgba(255,255,255,0.05); border-radius:15px; background: #1e293b; overflow:hidden;">
+                <div onclick="toggleAccordion(this)" style="padding:15px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                    <span style="font-weight:700; font-size:12px; color: #f1f5f9;">Apakah layanan sistem aktif 24 jam?</span>
+                    <i class="fas fa-chevron-down" style="font-size:10px; color: var(--accent); transition: 0.3s;"></i>
+                </div>
+                <div style="display:none; padding:10px 15px 15px; font-size:11px; color:#94a3b8; border-top: 1px solid rgba(255,255,255,0.05);">
+                 Sistem kami selalu aktif 24 jam, untuk waktu maintenance mulai (23:00 - 05:30 WIB) semua proses trx off.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+
+</style>
+</body>
+</html>
