@@ -6,15 +6,15 @@
     <title>MarketFanzz- Ultimate</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <meta name="theme-color" content="#020617">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <style>
         :root { --bg: #020617; --card: #1e293b; --accent: #22d3ee; --text: #f1f5f9; --grad: linear-gradient(135deg, #0ea5e9, #6366f1); }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: 'Plus Jakarta Sans', sans-serif; }
         body { margin: 0; background: var(--bg); color: var(--text); padding-bottom: 120px; overflow-x: hidden; }
-
-        /* LOGIN */
-        #login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px; }
-        .login-box { background: var(--card); padding: 30px; border-radius: 20px; width: 100%; max-width: 350px; text-align: center; border: 1px solid var(--accent); box-shadow: 0 0 30px rgba(34, 211, 238, 0.2); }
-
+        
         header { background: rgba(15, 23, 42, 0.8); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,255,255,0.05); }
         #header-jam { font-weight: 800; color: var(--accent); font-size: 14px; }
 
@@ -70,9 +70,29 @@
         .quran-b { flex:1; overflow-y:auto; padding:20px; background:var(--bg); line-height:2; }
         .riwayat-box { background: var(--card); border-radius: 15px; padding: 15px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 15px; }
         
-.riwayat-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 11px; }
-.riwayat-item:last-child { border: none; }
-.status-badge { background: #22c55e; color: white; padding: 2px 6px; border-radius: 4px; font-size: 9px; font-weight: 800; }
+/* GANTI CSS LAMA LU PAKE INI */
+.riwayat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.03); /* Ada background tipis biar mewah */
+    padding: 15px;
+    border-radius: 15px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.status-badge {
+    font-size: 9px;
+    font-weight: 800;
+    color: #10b981; /* Hijau soft */
+    background: rgba(16, 185, 129, 0.1); /* Background transparan ijo */
+    padding: 3px 10px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-top: 5px;
+}
+
 
 .quran-item {
     background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.8));
@@ -101,6 +121,42 @@
 </head>
 
 <body>
+   <div id="auth-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #020617; z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px;">
+    <div style="width: 100%; max-width: 400px; background: #1e293b; border-radius: 24px; padding: 30px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
+        
+        <div style="display: flex; background: #0f172a; padding: 5px; border-radius: 15px; margin-bottom: 25px;">
+            <div id="tab-login" onclick="switchAuth('login')" style="flex: 1; text-align: center; padding: 10px; border-radius: 12px; cursor: pointer; font-weight: 800; font-size: 14px; transition: 0.3s; background: var(--grad); color: white;">LOGIN</div>
+            <div id="tab-register" onclick="switchAuth('register')" style="flex: 1; text-align: center; padding: 10px; border-radius: 12px; cursor: pointer; font-weight: 800; font-size: 14px; transition: 0.3s; color: #94a3b8;">REGISTER</div>
+        </div>
+
+        <h2 id="auth-title" style="margin: 0 0 10px; font-size: 22px; font-weight: 800; color: #fff;">FanzMarket</h2>
+        <p id="auth-desc" style="margin: 0 0 25px; font-size: 13px; color: #94a3b8;">login/register to web</p>
+
+        <div id="form-login">
+            <input type="text" id="l-user" placeholder="Username" style="width: 100%; padding: 15px; background: #0f172a; border: 1px solid #334155; border-radius: 12px; color: white; margin-bottom: 15px; outline: none;">
+         <div style="position: relative; margin-bottom: 20px;">
+    <input type="password" id="l-pass" placeholder="Password" style="width: 100%; padding: 15px 45px 15px 15px; background: #0f172a; border: 1px solid #334155; border-radius: 12px; color: white; outline: none;">
+    <i class="fas fa-eye" id="toggle-l-pass" onclick="togglePass('l-pass', this)" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #94a3b8; cursor: pointer;"></i>
+</div>
+            <button onclick="handleLogin()" style="width: 100%; padding: 16px; background: var(--grad); border: none; border-radius: 12px; color: white; font-weight: 800; cursor: pointer; box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);">MASUK</button>
+        </div>
+        
+        <div id="form-register" style="display: none;">
+            <input type="text" id="r-user" placeholder="Username" style="width: 100%; padding: 15px; background: #0f172a; border: 1px solid #334155; border-radius: 12px; color: white; margin-bottom: 15px; outline: none;">
+            <input type="number" id="r-wa" placeholder="Nomor WhatsApp (08xxx)" style="width: 100%; padding: 15px; background: #0f172a; border: 1px solid #334155; border-radius: 12px; color: white; margin-bottom: 15px; outline: none;">
+         <div style="position: relative; margin-bottom: 20px;">
+    <input type="password" id="r-pass" placeholder="Buat Password" style="width: 100%; padding: 15px 45px 15px 15px; background: #0f172a; border: 1px solid #334155; border-radius: 12px; color: white; outline: none;">
+    <i class="fas fa-eye" id="toggle-r-pass" onclick="togglePass('r-pass', this)" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #94a3b8; cursor: pointer;"></i>
+</div>
+            <button onclick="handleRegister()" style="width: 100%; padding: 16px; background: #10b981; border: none; border-radius: 12px; color: white; font-weight: 800; cursor: pointer;">DAFTAR</button>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <span style="font-size: 12px; color: #64748b;">MarketFanzz &copy; 2026 - Secure System</span>
+        </div>
+    </div>
+</div>
+
 <audio id="adzan-audio" src="https://files.catbox.moe/97p6m0.mp3" preload="auto"></audio>
 
 <div id="order-modal">
@@ -124,14 +180,7 @@
     </div>
 </div>
 
-<div id="login-overlay">
-    <div class="login-box">
-        <h2 style="margin:0; color:var(--accent)">FANZ<span style="color:white">STORE</span></h2>
-        <p style="font-size:11px; opacity:0.6; margin-bottom:20px">Masuk untuk akses website</p>
-        <input type="text" id="in-nama" placeholder="Masukkan nama...">
-        <button onclick="prosesLogin()" style="width:100%; padding:12px; border-radius:10px; border:none; background:var(--grad); color:white; font-weight:800;">LOGIN</button>
-    </div>
-</div>
+
 
 <header>
     <div style="font-weight:800; font-size:1.2rem;">FANZZ<span style="color:var(--accent)">STORE</span></div>
@@ -158,7 +207,7 @@
 
         <div class="running-text">
         <div class="running-content">
-            Gunakan kode untuk dapat Diskon • Sistem Open 24 Jam • Proses Cepat & Aman • Terima Kasih Sudah Order di FanzStore 🔥
+            Gunakan kode untuk dapat Diskon • Sistem Open 24 Jam • Proses Cepat & Aman • Tidak menerima "HUTANG" dalam nominal & bentuk apapun • Terima Kasih telah trx di MarketFanz🔥
         </div>
     </div>
     
@@ -213,7 +262,7 @@
         <div class="pay-grid">
             <div class="pay-card" onclick="setPay('DANA', 500, this)"><i class="fas fa-wallet"></i><div>DANA</div><span class="fee-tag">+500</span></div>
             <div class="pay-card" onclick="setPay('QRIS', 800, this)"><i class="fas fa-qrcode"></i><div>QRIS</div><span class="fee-tag">+800</span></div>
-            <div class="pay-card" onclick="setPay('CASH', 1000, this)"><i class="fas fa-money-bill-wave"></i><div>CASH</div><span class="fee-tag">+1rb</span></div>
+            <div class="pay-card" onclick="setPay('CASH', 2000, this)"><i class="fas fa-money-bill-wave"></i><div>CASH</div><span class="fee-tag">+2rb</span></div>
         </div>
         
 <div class="section-title">3. Select Category</div>
@@ -248,7 +297,7 @@
         
         <div class="section-title" style="color:#10b981; border-left-color:#10b981;">Qur'an By Fanz</div>
         <div style="margin-bottom: 15px;">
-    <input type="text" id="searchQuran" onkeyup="cariSurat()" placeholder="• Cari nama surat...🔎" 
+    <input type="text" id="searchQuran" onkeyup="cariSurat()" placeholder="• Cari surat...🔎" 
         style="width: 100%; padding: 12px 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: var(--card); color: white; font-size: 13px; outline: none;">
 </div>
         <div id="quran-list" style="display:flex; flex-direction:column; gap:8px; max-height: 400px; overflow-y: auto;">
@@ -318,7 +367,7 @@
 const DB = {
     game: {
         ml:[["5 Diamond",1000],["12 Diamond",3500],["28 Diamond",8000],["36 Diamond",10000],["56 Diamond",15000],["85 Diamond",22500],["100 Diamond",26000],["144 Diamond",38000],["170 Diamond",45500],["240 Diamond",63000],["355 Diamond",93000],["425 Diamond",112000],["514 Diamond",132000],["712 Diamond",183000],["875 Diamond",217000],["1050 Diamond",265500],["1220 Diamond",309000],["1453 Diamond",371000],["1750 Diamond",441000],["2180 Diamond",524000],["2578 Diamond",625000],["4020 Diamond",961000],["7660 Diamond",1839000],["Weekly Diamond Pass",29500],["Twilight Pass",146500],["Starlight Mem Plus",195500]],
-        ff:[["5 Diamond",500],["12 Diamond",1500],["20 Diamond",3000],["30 Diamond",4000],["50 Diamond",7000],["70 Diamond",9000],["100 Diamond",13000],["140 Diamond",19000],["150 Diamond",21000],["210 Diamond",27000],["355 Diamond",48000],["425 Diamond",56000],["500 Diamond",68000],["720 Diamond",95000],["860 Diamond",112000],["1000 Diamond",135000],["1075 Diamond",145000],["1440 Diamond",190000],["1450 Diamond",192000],["2000 Diamond",260000],["2180 Diamond",285000],["3640 Diamond",470000],["7290 Diamond",930000],["Membership Mingguan",28500],["Membership Bulanan",81500],["BP Card",41500]],
+        ff:[["5 Diamond",500],["12 Diamond",1000],["20 Diamond",3000],["30 Diamond",4000],["50 Diamond",6000],["70 Diamond",9000],["100 Diamond",13000],["140 Diamond",18000],["150 Diamond",21000],["210 Diamond",27000],["355 Diamond",48000],["425 Diamond",56000],["500 Diamond",68000],["720 Diamond",95000],["860 Diamond",112000],["1000 Diamond",135000],["1075 Diamond",145000],["1440 Diamond",190000],["1450 Diamond",192000],["2000 Diamond",260000],["2180 Diamond",285000],["3640 Diamond",470000],["7290 Diamond",930000],["Membership Mingguan",27000],["Membership Bulanan",81000],["BP Card",41500]],
         pubg:[["35 UC",15500],["50 UC",24000],["70 UC",27500],["100 UC",29500],["150 UC",45500],["210 UC",59500],["250 UC",73000],["300 UC",75500],["375 UC",91000],["500 UC",122500],["525 UC",135500],["700 UC",158000],["750 UC",173500],["1000 UC",230500],["1250 UC",350500],["1750 UC",361500],["2500 UC",509000]],
         cod:[["26 + 5 CP",5500],["53 + 9 CP",10000],["106 + 21 CP",20000],["264 + 53 CP",45500],["528 + 106 CP",94000],["1056 + 317 CP",178500],["1584 + 475 CP",211500]],
         genshin:[["60 Crystals",12500],["300 + 30 Crystals",59500],["980 + 110 Crystals",179000],["1980 + 260 Crystals",387500],["3280 + 600 Crystals",615500]],
@@ -331,21 +380,22 @@ const DB = {
        steam:[["IDR 12K",15000],["IDR 45K",50000]]
     },
     pulsa: {
-        telkomsel:[["5.000",6500],["10.000",11500],["15.000",16500],["20.000",21000],["25.000",26000],["30.000",31500],["40.000",41500],["50.000",51000],["60.000",61500],["70.000",71500],["80.000",81500],["100.000",102000],["150.000",152000],["200.000",202000]],
-        xl:[["5.000",6500],["10.000",11500],["15.000",16500],["25.000",26500],["30.000",31500],["40.000",41500],["50.000",51500],["70.000",71500],["80.000",81500],["100.000",101000],["150.000",151500],["200.000",202000]],
-        axis:[["5.000",6500],["10.000",11500],["15.000",16500],["25.000",26500],["30.000",31500],["40.000",41500],["50.000",51500],["100.000",101000],["150.000",151500],["200.000",202000]],
-        indosat:[["5.000",7000],["10.000",12000],["15.000",16000],["20.000",21000],["25.000",25500],["30.000",31000],["40.000",41000],["50.000",51000],["70.000",71000],["80.000",81000],["90.000",91000],["100.000",101000]],
-        tri:[["5.000",6500],["10.000",11500],["15.000",16000],["20.000",21000],["25.000",26000],["30.000",31500],["40.000",41500],["50.000",51000],["70.000",71500],["90.000",91500],["100.000",102000],["125.000",127000],["150.000",152000],["200.000",202000]]
+        telkomsel:[["5.000",6500],["10.000",11000],["15.000",16000],["20.000",21000],["25.000",26000],["30.000",31500],["40.000",41000],["50.000",51500],["60.000",61500],["70.000",71500],["80.000",81500],["100.000",102000],["150.000",152000],["200.000",202000]],
+        xl:[["5.000",6000],["10.000",11000],["15.000",16000],["25.000",26000],["30.000",31000],["40.000",41000],["50.000",51500],["70.000",71500],["80.000",81500],["100.000",102000],["150.000",152000],["200.000",202000]],
+        axis:[["5.000",6000],["10.000",11000],["15.000",16000],["25.000",26500],["30.000",31500],["40.000",41500],["50.000",51500],["100.000",101000],["150.000",151500],["200.000",202000]],
+        indosat:[["5.000",6500],["10.000",11500],["15.000",16500],["20.000",21500],["25.000",25500],["30.000",31500],["40.000",41500],["50.000",51500],["70.000",71500],["80.000",81500],["90.000",91500],["100.000",102000]],
+        tri:[["5.000",6500],["10.000",11500],["15.000",16000],["20.000",21000],["25.000",26000],["30.000",31500],["40.000",41500],["50.000",51000],["70.000",71500],["90.000",91500],["100.000",102000],["125.000",127000],["150.000",152000],["200.000",202000]],
+        "by.u":[["3.000",4000],["4.000",5000],["5.000",6000],["10.000",11000],["15.000",16000],["20.000",21000],["25.000",26000],["30.000",31000],["35.000",36000],["40.000",41000],["45.000",46000],["50.000",51000],["55.000",56000],["60.000",61500],["70.000",71500],["80.000",81500],["90.000",91500],["100.000",101500],["150.000",152000],["200.000",202000]]
     },
     unchek: {
-       biasa:[["15 unch",7000],["50 unch",15000],["60 unch",17000],["70 unch",19000],["100 unch",34000],["200 unch",40000]],
-       premium:[["10 unch",7000],["20 unch",13000],["30 unch",18000],["50 unch",32000],["100 unch",53000],["200 unch",73000]],
-       antizonk:[["10 unch",32000],["15 unch",42000],["20 unch",52000],["25 unch",67000],["30 unch",83000],["50 unch",104000],["100 unch",124000]]
+       biasa:[["15 unch",5000],["50 unch",13000],["60 unch",15000],["70 unch",17000],["100 unch",32000],["200 unch",38000]],
+       premium:[["10 unch",5000],["20 unch",11000],["30 unch",16000],["50 unch",30000],["100 unch",51000],["200 unch",71000]],
+       antizonk:[["10 unch",30000],["15 unch",40000],["20 unch",50000],["25 unch",65000],["30 unch",81000],["50 unch",102000],["100 unch",122000]]
     },
     wallet: {
-        dana:[["1.000",1500],["2.000",2500],["3.000",3500],["4.000",4500],["5.000",5500],["10.000",10500],["15.000",15500],["20.000",20500],["25.000",26500],["30.000",31500],["40.000",41500],["50.000",51500],["60.000",61500],["70.000",71500],["80K",81500],["90K",91500],["100.000",102500],["125.000",127500],["150.000",152500],["200.000",202000]],
-        ovo:[["10.000",11500],["15.000",16500],["20.000",21500],["25.000",26500],["30.000",31500],["40.000",41500],["50.000",51500],["60.000",61500],["70.000",71500],["80.000",81500],["90.000",91500],["100.000",102500],["125.000",127500],["150.000",152500],["200.000",202000]],
-        gopay:[["10.000",11500],["15.000",16500],["20.000",21500],["25.000",26500],["30.000",31500],["40.000",41500],["50.000",51500],["60.000",61500],["70.000",71500],["80.000",81500],["90.000",91500],["100.000",102500],["125.000",127500],["150.000",152500],["200.000",202000]],
+        dana:[["1.000",1500],["2.000",2500],["3.000",3500],["4.000",4500],["5.000",5500],["10.000",10500],["15.000",15500],["20.000",20500],["25.000",25500],["30.000",30500],["40.000",40500],["50.000",51500],["60.000",61500],["70.000",71500],["80K",81500],["90K",91500],["100.000",102000],["125.000",127000],["150.000",152000],["200.000",202000]],
+        ovo:[["10.000",11000],["15.000",16000],["20.000",21000],["25.000",26000],["30.000",31000],["35.000",36000],["40.000",41000],["45.000",46000],["50.000",51500],["55.000",56500],["60.000",61500],["65.000",66500],["70.000",71500],["75.000",76500],["80.000",81500],["85.000",86500],["90.000",91500],["95.000",96500],["100.000",102500],["125.000",127500],["150.000",152500],["200.000",202000]],
+        gopay:[["1.000",1500],["2.000",2500],["3.000",3500],["4.000",4500],["5.000",5500],["10.000",11500],["15.000",16500],["20.000",21500],["25.000",26500],["30.000",31500],["40.000",41500],["50.000",51500],["60.000",61500],["70.000",71500],["80.000",82000],["90.000",92000],["100.000",102000],["125.000",127000],["150.000",152000],["200.000",202000]],
         shopeepay:[["10.000",11500],["15.000",16500],["20.000",21500],["25.000",26500],["30.000",31500],["40.000",41500],["50.000",51500],["60.000",61500],["70.000",71500],["80.000",81500],["90.000",91500],["100.000",102500],["125.000",127500],["150.000",152500],["200.000",202000]],
         Linkaja:[["10.000",11500],["15.000",16500],["20.000",21500],["25.000",26500],["30.000",31500],["35.000",36500],["40.000",41500],["45.000",46500],["50.000",51500],["55.000",56500],["60.000",61500],["65.000",66500],["70.000",71500],["80.000",81500],["90.000",91500],["100.000",101500],["125.000",126500]]
     }
@@ -353,14 +403,70 @@ const DB = {
 
 let price = 0, fee = 0, game = "", item = "", pay = "", disc = 1, sIdx = 0, uName = "user";
 
-function prosesLogin() {
-    let n = document.getElementById('in-nama').value;
-    if(n.length < 2) return alert("Isi namamu dulu wok!");
-    uName = n;
-    document.getElementById('user-display').innerText = n;
-    document.getElementById('login-overlay').style.display = 'none';
-    document.getElementById('chat-content').innerHTML = `<div style="background:#1e293b; padding:10px; border-radius:10px; align-self:flex-start">Welcome to MarketFanz User ${uName}! Saya Asisten FANZZAI untuk membantu & melayani user, Ada yang bisa saya bantu? Ketik <b>PROMO</b>, <b>WAKTU</b>, <b>CARA</b>, <b>WA</b>, <b>LEGAL</b>, <b>METODE</b>.</div>`;
+// 1. FUNGSI PINDAH TAB LOGIN/DAFTAR
+function switchAuth(type) {
+    const tLog = document.getElementById('tab-login');
+    const tReg = document.getElementById('tab-register');
+    const fLog = document.getElementById('form-login');
+    const fReg = document.getElementById('form-register');
+    const title = document.getElementById('auth-title');
+
+    if (type === 'login') {
+        tLog.style.background = 'var(--grad)'; tLog.style.color = 'white';
+        tReg.style.background = 'transparent'; tReg.style.color = '#94a3b8';
+        fLog.style.display = 'block'; fReg.style.display = 'none';
+        title.innerText = "Selamat Datang!";
+    } else {
+        tReg.style.background = '#10b981'; tReg.style.color = 'white';
+        tLog.style.background = 'transparent'; tLog.style.color = '#94a3b8';
+        fReg.style.display = 'block'; fLog.style.display = 'none';
+        title.innerText = "Daftar Akun";
+    }
 }
+
+// 2. FUNGSI DAFTAR (Simpan ke Browser)
+function handleRegister() {
+    const user = document.getElementById('r-user').value;
+    const wa = document.getElementById('r-wa').value;
+    const pass = document.getElementById('r-pass').value;
+
+    if (!user || !wa || !pass) return alert("Lengkapi data dulu bang!");
+
+    localStorage.setItem('mf_user_' + user, JSON.stringify({ user, wa, pass }));
+    alert("Register Sukses! Silakan Login.");
+    switchAuth('login');
+}
+
+// 3. FUNGSI LOGIN (Cek Data & Sapa User)
+function handleLogin() {
+    const user = document.getElementById('l-user').value;
+    const pass = document.getElementById('l-pass').value;
+    const savedData = localStorage.getItem('mf_user_' + user);
+    
+    if (savedData) {
+        const parsedData = JSON.parse(savedData);
+        if (parsedData.pass === pass) {
+            document.getElementById('auth-overlay').style.display = 'none';
+            
+            // Update Nama di UI
+            if(document.getElementById('user-display')) {
+                document.getElementById('user-display').innerText = user;
+            }
+            
+            // Pesan Welcome FANZZAI (Logika lama lu gue pindahin sini)
+            if(document.getElementById('chat-content')) {
+                document.getElementById('chat-content').innerHTML = `<div style="background:#1e293b; padding:10px; border-radius:10px; align-self:flex-start; font-size:12px;">Welcome to MarketFanz User <b>${user}</b>! Saya Asisten FANZZAI untuk membantu & melayani user, Ada yang bisa saya bantu? Ketik <b>PROMO</b>, <b>WAKTU</b>, <b>CARA</b>, <b>WA</b>, <b>LEGAL</b>, <b>METODE</b>.</div>`;
+            }
+            
+            localStorage.setItem('mf_logged_in', user);
+        } else {
+            alert("Password salah om!");
+        }
+    } else {
+        alert("Username tidak ditemukan! Daftar dulu wok.");
+    }
+}
+
 
 function updateClock() {
     const now = new Date();
@@ -610,7 +716,7 @@ function prosesCv() {
     if(rek.length < 5) return alert("Isi nomor rekening/e-wallet tujuan dulu!");
     
     // Format pesan WhatsApp biar rapi & pro
-    let msg = `*ORDER CONVERT PULSA*%0A`;
+    let msg = `*ORDER CV PULSA*%0A`;
     msg += `----------------------------%0A`;
     msg += `*Operator:* ${op}%0A`;
     msg += `*Nominal:* Rp ${parseFloat(nom).toLocaleString('id-ID')}%0A`;
@@ -719,13 +825,13 @@ function sendChat() {
     setTimeout(() => {
         let r = "";
         function random(arr){ return arr[Math.floor(Math.random() * arr.length)]; }
-        if(v.includes("PROMO")) r = random(["🔥 Lagi ada diskon! Pakai FANZ73, FANZ75, FANZ98, dll", "Diskon tersedia! Kode hanya bisa dipakai 1x ya."]);
-        else if(v.includes("WAKTU") || v.includes("OPEN")) r = random(["Sistem open 24 jam", "Bisa order kapan aja, sistem otomatis 24 jam.", "Aktif terus bos, kecuali kalau ada gangguan server."]);
+        if(v.includes("PROMO")) r = random(["🔥 Silakan ambil 1 kode promo! Pakai FANZ78, FANZ23, FANZ98. Kode hanya berlaku untuk Payment QRIS & DANA!!", "Kode tersedia & hanya berlaku untuk Payment QRIS & DANA! Pantau terus info admin untuk dapat kode diskon secara acak, Kode hanya bisa dipakai 1x ya."]);
+        else if(v.includes("WAKTU") || v.includes("OPEN")) r = random(["Sistem open 24 jam", "Bisa order kapan aja, sistem otomatis 24 jam, Kecuali saat maintenance (23:00-05:00) trx Off", "Aktif terus, kecuali ada gangguan server & waktu maintenance (23:00-05:00) Off"]);
         else if(v.includes("CARA") || v.includes("ORDER")) r = random(["Pilih Game → Masukkan ID → Pilih Pembayaran → Klik Order!", "Tinggal pilih produk, isi ID, bayar, selesai"]);
         else if(v.includes("ADMIN") || v.includes("WA")) r = random(["Admin aktif, WA: 0877 9523 7332 // 0878 1966 1875", "admin selalu siap bantu jika ada kendala"]);
         else if(v.includes("AMAN") || v.includes("LEGAL")) r = random(["Trx aman & legal. Data tidak disimpan.", "Sistem kami secure dan terpercaya"]);
-        else if(v.includes("METODE") || v.includes("BAYAR")) r = random(["Payment: QRIS, E-Wallet, Transfer Bank.", "Kami menerima QRIS dan berbagai E-Wallet."]);
-        else r = random(["Maaf saya tidak paham, Coba ketik: promo / cara / waktu", "Keyword belum tersedia."]);
+        else if(v.includes("METODE") || v.includes("BAYAR")) r = random(["Payment: QRIS, E-Wallet, CASH.", "Kami menerima QRIS dan berbagai E-Wallet."]);
+        else r = random(["Maaf saya tidak paham, Coba ketik: promo / cara / waktu / wa / legal / metode", "Keyword belum tersedia."]);
         typing.remove();
         c.innerHTML += `<div style="background:#1e293b; padding:10px; border-radius:10px;">${r}</div>`;
         c.scrollTop = c.scrollHeight;
@@ -734,10 +840,14 @@ function sendChat() {
 
 function orderNow() {
     let id = document.getElementById('target').value.trim();
-    if (!id) return alert("ID belum diisi!");
+    if (!id) return alert("ID/NO belum diisi!");
     if (!price) return alert("pilih nominal!");
     if (!pay) return alert("pilih metode bayar!");
-    let detail = `<b>User:</b> ${uName}<br><b>Layanan:</b> ${game.toUpperCase()}<br><b>Item:</b> ${item}<br><b>ID:</b> ${id}<br><b>Bayar:</b> ${pay}<br><b>Total:</b> ${document.getElementById('total-txt').innerText}`;
+
+    // Ambil uName dari login terbaru biar gak 'Guest' terus
+    let uNameAktif = localStorage.getItem('mf_logged_in') || "Guest";
+
+    let detail = `<b>User:</b> ${uNameAktif}<br><b>Layanan:</b> ${game.toUpperCase()}<br><b>Item:</b> ${item}<br><b>ID:</b> ${id}<br><b>Bayar:</b> ${pay}<br><b>Total:</b> ${document.getElementById('total-txt').innerText}`;
     document.getElementById('modal-detail').innerHTML = detail;
     
     document.getElementById('order-modal').style.display = 'flex';
@@ -745,54 +855,67 @@ function orderNow() {
 
 function closeModal(){ document.getElementById('order-modal').style.display='none'; }
 
+// GANTI FUNGSI CONFIRM ORDER BIAR SINKRON SAMA LOGIN
 function confirmOrder(){
-    let btn = document.getElementById("btn-confirm"), id = document.getElementById('target').value;
+    let btn = document.getElementById("btn-confirm");
+    let id = document.getElementById('target').value;
     let totalBayar = document.getElementById('total-txt').innerText;
+    
+    // Ambil Username dari Login (Kunci: mf_logged_in)
+    let userAktif = localStorage.getItem('mf_logged_in') || "Guest";
+    
     btn.innerText = "Memproses..."; btn.disabled = true;
     
-    // Simpan data ke memori browser
     const data = JSON.parse(localStorage.getItem('fanz_history')) || [];
-    data.push({ game: game.toUpperCase(), item: item, total: totalBayar });
+    data.push({ 
+        game: game.toUpperCase(), 
+        item: item, 
+        total: totalBayar,
+        tgl: new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'}),
+        tglFull: new Date().toLocaleDateString('id-ID')
+    });
     localStorage.setItem('fanz_history', JSON.stringify(data));
+    
+    // Langsung update riwayat sebelum ke WA
+    muatRiwayat(); 
 
     setTimeout(() => {
-        let msg = `ORDER TOPUP%0AUser: ${uName}%0ALayanan: ${game.toUpperCase()}%0AItem: ${item}%0AID: ${id}%0ABayar: ${pay}%0ATotal: ${totalBayar}`;
+        let msg = `ORDER TOPUP%0AUser: ${userAktif}%0ALayanan: ${game.toUpperCase()}%0AItem: ${item}%0AID: ${id}%0ABayar: ${pay}%0ATotal: ${totalBayar}`;
         window.open(`https://wa.me/6287795237332?text=${msg}`);
         btn.innerText = "Konfirmasi"; btn.disabled = false; closeModal();
-        muatRiwayat(); // Update tampilan riwayat
-    }, 1500);
+    }, 800);
 }
 
-window.onload = () => { 
-    updateClock(); 
-    pilihK('game', document.querySelector('.nav-box')); 
-    muatRiwayat(); 
-};
-
-// 1. Fungsi untuk menampilkan data riwayat dari memori HP ke layar
+// GANTI MUAT RIWAYATNYA BIAR BOX-NYA MUNCUL
 function muatRiwayat() {
     const list = document.getElementById('list-riwayat');
-    // Mengambil data dari localStorage dengan kunci 'fanz_history'
+    if(!list) return;
+    
     const data = JSON.parse(localStorage.getItem('fanz_history')) || [];
     
-    if (data.length === 0) return;
+    if (data.length === 0) {
+        list.innerHTML = `<div style="text-align:center; padding:30px; opacity:0.5; font-size:11px;">Belum ada riwayat pesanan</div>`;
+        return;
+    }
 
     let html = "";
-   
-    data.reverse().slice(0, 3).forEach(h => {
-        html += `<div class="riwayat-item">
-            <div>
-                <div style="font-weight:800">${h.game}</div>
-                <div style="opacity:0.6;font-size:9px">${h.item}</div>
+    [...data].reverse().slice(0, 5).forEach(h => {
+        html += `
+        <div class="riwayat-item" style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.03); padding:15px; border-radius:15px; margin-bottom:12px; border:1px solid rgba(255,255,255,0.05);">
+            <div style="flex: 1;">
+                <div style="font-weight:800; font-size:13px; color:var(--accent); text-transform:uppercase;">${h.game}</div>
+                <div style="opacity:0.7; font-size:10px; margin: 2px 0;">${h.item}</div>
+                <div style="font-size:8px; color:#94a3b8;">${h.tglFull} | ${h.tgl}</div>
             </div>
-            <div style="text-align:right">
-                <div style="color:var(--accent);font-weight:800">${h.total}</div>
-                <span class="status-badge">SUKSES</span>
+            <div style="text-align:right;">
+                <div style="color:#fff; font-weight:800; font-size:12px;">${h.total}</div>
+                <span class="status-badge" style="font-size:9px; font-weight:800; color:#10b981; background:rgba(16,185,129,0.1); padding:3px 10px; border-radius:6px; display:inline-block; margin-top:5px;">SUKSES</span>
             </div>
         </div>`;
     });
     list.innerHTML = html;
 }
+
 
 // 2. Fungsi untuk menghapus semua data riwayat yang tersimpan
 function hapusRiwayat() { 
