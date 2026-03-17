@@ -162,6 +162,26 @@
 <div id="order-modal">
   <div class="modal-box">
     <h3 style="margin-top:0;color:var(--accent)">Konfirmasi Pesanan</h3>
+   <div id="qr-container" style="display:none; text-align:center; margin-bottom:15px; background:white; padding:10px; border-radius:15px;">
+        <p style="color:#000; font-size:10px; font-weight:800; margin-bottom:5px;">SCAN QR DI BAWAH INI</p>
+        <img src="https://i.ibb.co.com/4wNCmgjS/IMG-20260317-140815.jpg" style="width:100%; max-width:180px; border-radius:5px;">
+        <p style="color:#64748b; font-size:9px; margin-top:5px;">tf sesuai nominal!!</p>
+    </div>
+    <div id="cash-options" style="display:none; margin-bottom:15px; background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; border:1px solid rgba(255,255,255,0.1);">
+    <p style="font-size:11px; margin-top:0; color:var(--accent); font-weight:700;">Pilih Nominal Pembayaran:</p>
+
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-bottom:10px;">
+        <button onclick="setCashPas()" type="button" style="background:var(--accent); color:black; border:none; padding:8px; border-radius:8px; font-size:11px; font-weight:bold;">✨ UANG PAS</button>
+       <button onclick="setCash(10000)" style="background:var(--accent); color:black; border:none; padding:8px; border-radius:8px; font-size:11px; font-weight:bold;">Rp 10.000</button>
+        <button onclick="setCash(20000)" style="background:var(--accent); color:black; border:none; padding:8px; border-radius:8px; font-size:11px; font-weight:bold;">Rp 20.000</button>
+        <button onclick="setCash(50000)" style="background:var(--accent); color:black; border:none; padding:8px; border-radius:8px; font-size:11px; font-weight:bold;">Rp 50.000</button>
+        <button onclick="setCash(100000)" style="background:var(--accent); color:black; border:none; padding:8px; border-radius:8px; font-size:11px; font-weight:bold;">Rp 100.000</button>
+    </div>
+
+    <input type="number" id="custom-cash" placeholder="Atau masukkan nominal lain..." 
+           style="width:100%; padding:10px; border-radius:8px; border:1px solid #334155; background:#0f172a; color:white; font-size:12px;">
+</div>
+
     <div id="modal-detail" style="font-size:12px;line-height:1.6;"></div>
     <div class="modal-btns">
       <button onclick="closeModal()" style="background:#334155;color:white;">BATAL</button>
@@ -180,8 +200,6 @@
     </div>
 </div>
 
-
-
 <header>
     <div style="font-weight:800; font-size:1.2rem;">FANZZ<span style="color:var(--accent)">STORE</span></div>
     <div style="text-align:right">
@@ -191,7 +209,7 @@
 </header>
 
 <div class="container">
-    <div id="welcome" style="font-weight:700; margin-bottom:15px; font-size:15px">Welcome, <span id="user-display" style="color:var(--accent)">User</span>! 👋</div>
+    <div id="welcome" style="font-weight:700; margin-bottom:15px; font-size:15px">Welcome, <span id="user-display" style="color:var(--accent)">User</span>! 🙏🏻</div>
 
         <div class="riwayat-box">
             <div class="riwayat-header">
@@ -207,7 +225,7 @@
 
         <div class="running-text">
         <div class="running-content">
-            Gunakan kode untuk dapat Diskon • Sistem Open 24 Jam • Proses Cepat & Aman • Tidak menerima "HUTANG" dalam nominal & bentuk apapun • Terima Kasih telah trx di MarketFanz🔥
+            Welcome to marketfanz, moga langganan ^_^ • Gunakan kode untuk dapat Diskon • Sistem Open 24 Jam • Proses Cepat & Aman • Tidak menerima "HUTANG" dalam nominal & bentuk apapun • Terima Kasih telah trx di MarketFanz🔥
         </div>
     </div>
     
@@ -262,7 +280,7 @@
         <div class="pay-grid">
             <div class="pay-card" onclick="setPay('DANA', 500, this)"><i class="fas fa-wallet"></i><div>DANA</div><span class="fee-tag">+500</span></div>
             <div class="pay-card" onclick="setPay('QRIS', 800, this)"><i class="fas fa-qrcode"></i><div>QRIS</div><span class="fee-tag">+800</span></div>
-            <div class="pay-card" onclick="setPay('CASH', 2000, this)"><i class="fas fa-money-bill-wave"></i><div>CASH</div><span class="fee-tag">+2rb</span></div>
+            <div class="pay-card" onclick="setPay('CASH', 1500, this)"><i class="fas fa-money-bill-wave"></i><div>CASH</div><span class="fee-tag">+1,5rb</span></div>
         </div>
         
 <div class="section-title">3. Select Category</div>
@@ -272,7 +290,6 @@
             <div class="nav-box" onclick="pilihK('pulsa', this)">Pulsa / Data</div>
             <div class="nav-box" onclick="pilihK('wallet', this)">E-Wallet</div>
             <div class="nav-box" onclick="pilihK('convert', this)">Convert</div>
-            <div class="nav-box" onclick="pilihK('unchek', this)">Unchek</div>
             <div class="nav-box" onclick="pilihIslami(this)" style="background: #10b981; color: white;">ISLAMI</div>
         </div>
 
@@ -387,14 +404,9 @@ const DB = {
         tri:[["5.000",6500],["10.000",11500],["15.000",16000],["20.000",21000],["25.000",26000],["30.000",31500],["40.000",41500],["50.000",51000],["70.000",71500],["90.000",91500],["100.000",102000],["125.000",127000],["150.000",152000],["200.000",202000]],
         "by.u":[["3.000",4000],["4.000",5000],["5.000",6000],["10.000",11000],["15.000",16000],["20.000",21000],["25.000",26000],["30.000",31000],["35.000",36000],["40.000",41000],["45.000",46000],["50.000",51000],["55.000",56000],["60.000",61500],["70.000",71500],["80.000",81500],["90.000",91500],["100.000",101500],["150.000",152000],["200.000",202000]]
     },
-    unchek: {
-       biasa:[["15 unch",5000],["50 unch",13000],["60 unch",15000],["70 unch",17000],["100 unch",32000],["200 unch",38000]],
-       premium:[["10 unch",5000],["20 unch",11000],["30 unch",16000],["50 unch",30000],["100 unch",51000],["200 unch",71000]],
-       antizonk:[["10 unch",30000],["15 unch",40000],["20 unch",50000],["25 unch",65000],["30 unch",81000],["50 unch",102000],["100 unch",122000]]
-    },
     wallet: {
-        dana:[["1.000",1500],["2.000",2500],["3.000",3500],["4.000",4500],["5.000",5500],["10.000",10500],["15.000",15500],["20.000",20500],["25.000",25500],["30.000",30500],["40.000",40500],["50.000",51500],["60.000",61500],["70.000",71500],["80K",81500],["90K",91500],["100.000",102000],["125.000",127000],["150.000",152000],["200.000",202000]],
-        ovo:[["10.000",11000],["15.000",16000],["20.000",21000],["25.000",26000],["30.000",31000],["35.000",36000],["40.000",41000],["45.000",46000],["50.000",51500],["55.000",56500],["60.000",61500],["65.000",66500],["70.000",71500],["75.000",76500],["80.000",81500],["85.000",86500],["90.000",91500],["95.000",96500],["100.000",102500],["125.000",127500],["150.000",152500],["200.000",202000]],
+        dana:[["1.000",1500],["2.000",2500],["3.000",3500],["4.000",4500],["5.000",5500],["10.000",11000],["15.000",16000],["20.000",21000],["25.000",26000],["30.000",31000],["40.000",41000],["50.000",52000],["60.000",62000],["70.000",72000],["80K",82500],["90K",92500],["100.000",103000],["125.000",128000],["150.000",153000],["200.000",203000]],
+        ovo:[["10.000",11000],["15.000",16000],["20.000",21000],["25.000",26000],["30.000",31000],["35.000",36000],["40.000",41000],["45.000",46000],["50.000",51500],["55.000",56500],["60.000",61500],["65.000",66500],["70.000",71500],["75.000",76500],["80.000",81500],["85.000",86500],["90.000",91500],["95.000",96500],["100.000",102500],["125.000",127500],["150.000",152500],["200.000",202500]],
         gopay:[["1.000",1500],["2.000",2500],["3.000",3500],["4.000",4500],["5.000",5500],["10.000",11500],["15.000",16500],["20.000",21500],["25.000",26500],["30.000",31500],["40.000",41500],["50.000",51500],["60.000",61500],["70.000",71500],["80.000",82000],["90.000",92000],["100.000",102000],["125.000",127000],["150.000",152000],["200.000",202000]],
         shopeepay:[["10.000",11500],["15.000",16500],["20.000",21500],["25.000",26500],["30.000",31500],["40.000",41500],["50.000",51500],["60.000",61500],["70.000",71500],["80.000",81500],["90.000",91500],["100.000",102500],["125.000",127500],["150.000",152500],["200.000",202000]],
         Linkaja:[["10.000",11500],["15.000",16500],["20.000",21500],["25.000",26500],["30.000",31500],["35.000",36500],["40.000",41500],["45.000",46500],["50.000",51500],["55.000",56500],["60.000",61500],["65.000",66500],["70.000",71500],["80.000",81500],["90.000",91500],["100.000",101500],["125.000",126500]]
@@ -455,7 +467,7 @@ function handleLogin() {
             
             // Pesan Welcome FANZZAI (Logika lama lu gue pindahin sini)
             if(document.getElementById('chat-content')) {
-                document.getElementById('chat-content').innerHTML = `<div style="background:#1e293b; padding:10px; border-radius:10px; align-self:flex-start; font-size:12px;">Welcome to MarketFanz User <b>${user}</b>! Saya Asisten FANZZAI untuk membantu & melayani user, Ada yang bisa saya bantu? Ketik <b>PROMO</b>, <b>WAKTU</b>, <b>CARA</b>, <b>WA</b>, <b>LEGAL</b>, <b>METODE</b>.</div>`;
+                document.getElementById('chat-content').innerHTML = `<div style="background:#1e293b; padding:10px; border-radius:10px; align-self:flex-start; font-size:12px;">Welcome to MarketFanz User <b>${user}</b>! Ada yang bisa saya bantu?🙏🏻 Ketik <b>PROMO</b>, <b>WAKTU</b>, <b>CARA</b>, <b>WA</b>, <b>LEGAL</b>, <b>METODE</b>.</div>`;
             }
             
             localStorage.setItem('mf_logged_in', user);
@@ -471,6 +483,7 @@ function handleLogin() {
 function updateClock() {
     const now = new Date();
     document.getElementById('header-jam').innerText = now.toLocaleTimeString('id-ID');
+    
     document.getElementById('header-tgl').innerText = now.toLocaleDateString('id-ID', {weekday:'long', day:'numeric', month:'short'});
 }
 setInterval(updateClock, 1000);
@@ -711,9 +724,9 @@ function prosesCv() {
     let hasil = document.getElementById('cv-hasil').innerText;
     
     // Validasi input
-    if(nom < 30000) return alert("Minimal convert Rp 30.000 bang!");
-    if(pengirim.length < 10) return alert("Masukkan nomor pengirim pulsa yang bener!");
-    if(rek.length < 5) return alert("Isi nomor rekening/e-wallet tujuan dulu!");
+    if(nom < 30000) return alert("Minimal cv Rp 30.000 🙏!");
+    if(pengirim.length < 10) return alert("Masukkan no pengirim yg bener!");
+    if(rek.length < 5) return alert("Isi no rek/e-wallet dulu!");
     
     // Format pesan WhatsApp biar rapi & pro
     let msg = `*ORDER CV PULSA*%0A`;
@@ -838,22 +851,69 @@ function sendChat() {
     }, 800);
 }
 
+function setCash(val) {
+    document.getElementById('custom-cash').value = val;
+    orderNow(); // <--- Ini biar tulisannya langsung update di modal
+}
+
+function setCashPas() {
+    // Kita ambil angkanya langsung dari teks "TOTAL" yang ada di layar
+    let totalElement = document.getElementById('total-txt').innerText;
+    
+    // Rumus sakti: Hapus tulisan "Rp" dan titik, sisain angkanya doang
+    let angkaMurni = totalElement.replace(/[^0-9]/g, ''); 
+
+    if (angkaMurni) {
+        document.getElementById('custom-cash').value = angkaMurni;
+        orderNow(); // Langsung update tulisan di modal
+    } else {
+        alert("Pilih nominal item dulu bang!");
+    }
+}
+
 function orderNow() {
     let id = document.getElementById('target').value.trim();
     if (!id) return alert("ID/NO belum diisi!");
     if (!price) return alert("pilih nominal!");
     if (!pay) return alert("pilih metode bayar!");
 
-    // Ambil uName dari login terbaru biar gak 'Guest' terus
     let uNameAktif = localStorage.getItem('mf_logged_in') || "Guest";
+    let totalTxt = document.getElementById('total-txt').innerText;
+    
+    // 1. Susun teks dasar
+    let detail = `<b>User:</b> ${uNameAktif}<br><b>Layanan:</b> ${game.toUpperCase()}<br><b>Item:</b> ${item}<br><b>ID:</b> ${id}<br><b>Bayar:</b> ${pay}<br><b>Total:</b> ${totalTxt}`;
 
-    let detail = `<b>User:</b> ${uNameAktif}<br><b>Layanan:</b> ${game.toUpperCase()}<br><b>Item:</b> ${item}<br><b>ID:</b> ${id}<br><b>Bayar:</b> ${pay}<br><b>Total:</b> ${document.getElementById('total-txt').innerText}`;
+    // 2. Tambahin nominal cash kalau ada
+    const cashInput = document.getElementById('custom-cash');
+    if (pay === "CASH" && cashInput && cashInput.value) {
+        detail += `<br><b>Nominal Cash:</b> Rp ${parseInt(cashInput.value).toLocaleString('id-ID')}`;
+    }
+
+    // 3. MASUKKIN KE HTML (PENTING!)
     document.getElementById('modal-detail').innerHTML = detail;
     
+    // 4. Logika tampilkan kotak QR atau CASH
+    const qrBox = document.getElementById('qr-container');
+    const cashBox = document.getElementById('cash-options');
+
+    if (pay === "QRIS") {
+        qrBox.style.display = "block";
+        cashBox.style.display = "none";
+    } else if (pay === "CASH") {
+        cashBox.style.display = "block";
+        qrBox.style.display = "none";
+    } else {
+        qrBox.style.display = "none";
+        cashBox.style.display = "none";
+    }
+
     document.getElementById('order-modal').style.display = 'flex';
 }
 
-function closeModal(){ document.getElementById('order-modal').style.display='none'; }
+function closeModal() { 
+    document.getElementById('order-modal').style.display = 'none'; 
+}
+
 
 // GANTI FUNGSI CONFIRM ORDER BIAR SINKRON SAMA LOGIN
 function confirmOrder(){
@@ -919,7 +979,7 @@ function muatRiwayat() {
 
 // 2. Fungsi untuk menghapus semua data riwayat yang tersimpan
 function hapusRiwayat() { 
-    if(confirm("Hapus semua riwayat pesanan?")) { 
+    if(confirm("Hapus semua riwayat?")) { 
         localStorage.removeItem('fanz_history'); 
         location.reload(); // Refresh halaman agar tampilan kembali bersih
     } 
@@ -944,7 +1004,7 @@ function putarAudio(url) {
     }
     currentAudio = new Audio(url);
     currentAudio.play();
-    alert("Memutar Murottal Syekh Mishary Rashid...");
+    alert("Memutar Murottal Syekh Mishary Rashid..");
 }
 
 function cekJadwalAdzan(jadwal) {
@@ -1075,7 +1135,7 @@ function playTestAdzan() {
 async function prosesTopup() {
     const target = document.getElementById('target-id').value;
     const zone = document.getElementById('zone-id') ? document.getElementById('zone-id').value : '';
-
+    
     if(!target || !item || !pay) {
         alert("Lengkapi data: ID Game, Nominal, dan Metode Pembayaran!");
         return;
@@ -1214,7 +1274,6 @@ function toggleAccordion(el) {
                     <span style="display:inline-block; background:rgba(34, 211, 238, 0.15); color:var(--accent); padding:3px 8px; border-radius:5px; margin:2px; font-weight:700; font-size:10px;">Voucher</span>
                     <span style="display:inline-block; background:rgba(34, 211, 238, 0.15); color:var(--accent); padding:3px 8px; border-radius:5px; margin:2px; font-weight:700; font-size:10px;">Pulsa</span>
                     <span style="display:inline-block; background:rgba(34, 211, 238, 0.15); color:var(--accent); padding:3px 8px; border-radius:5px; margin:2px; font-weight:700; font-size:10px;">E-Wallet</span>
-                    <span style="display:inline-block; background:rgba(34, 211, 238, 0.15); color:var(--accent); padding:3px 8px; border-radius:5px; margin:2px; font-weight:700; font-size:10px;">Unchek</span>
                 </div>
             </div>
 
