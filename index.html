@@ -55,7 +55,7 @@
 
         /* RUNNING TEXT */
         .running-text{ width:100%; overflow:hidden; background:rgba(34,211,238,0.1); border:1px solid rgba(34,211,238,0.3); border-radius:10px; margin-bottom:15px; }
-        .running-content{ display:inline-block; white-space:nowrap; padding:8px 0; font-size:11px; font-weight:700; color:var(--accent); animation:scrollText 15s linear infinite; }
+        .running-content{ display:inline-block; white-space:nowrap; padding:8px 0; font-size:11px; font-weight:700; color:var(--accent); animation:scrollText 25s linear infinite; }
         @keyframes scrollText{ 0%{transform:translateX(100%);} 100%{transform:translateX(-100%);} }
 
         /* MODAL */
@@ -116,7 +116,6 @@
     border-color: #10b981 !important;
     box-shadow: 0 0 10px rgba(16, 185, 129, 0.2;
 }
-
     </style>
 </head>
 
@@ -130,7 +129,7 @@
         </div>
 
         <h2 id="auth-title" style="margin: 0 0 10px; font-size: 22px; font-weight: 800; color: #fff;">FanzMarket</h2>
-        <p id="auth-desc" style="margin: 0 0 25px; font-size: 13px; color: #94a3b8;">login/register to web</p>
+        <p id="auth-desc" style="margin: 0 0 25px; font-size: 13px; color: #94a3b8;">belum punya akun? Register</p>
 
         <div id="form-login">
             <input type="text" id="l-user" placeholder="Username" style="width: 100%; padding: 15px; background: #0f172a; border: 1px solid #334155; border-radius: 12px; color: white; margin-bottom: 15px; outline: none;">
@@ -152,7 +151,7 @@
         </div>
 
         <div style="text-align: center; margin-top: 20px;">
-            <span style="font-size: 12px; color: #64748b;">MarketFanzz &copy; 2026 - Secure System</span>
+            <span style="font-size: 12px; color: #64748b;">FanzMarket &copy; 2026 - Secure System</span>
         </div>
     </div>
 </div>
@@ -165,7 +164,7 @@
 
     <div id="qr-container" style="display:none; text-align:center; margin-bottom:15px; background:white; padding:15px; border-radius:20px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
         <p style="color:#0f172a; font-size:11px; font-weight:800; margin-top:0; margin-bottom:10px; text-transform:uppercase; letter-spacing:1px;">
-            ⚡ PILIH QR⚡
+             PILIH QR⚡
         </p>
         
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: center;">
@@ -200,7 +199,7 @@
         </button>
 
         <button onclick="copyText('087795237332')" type="button" style="background:#22c55e; color:white; border:none; padding:10px; border-radius:8px; font-size:10px; font-weight:bold; text-align:left; cursor:pointer;">
-            <i class="fas fa-copy"></i> GOPAY: 0877 9523 7332 (MarketFanzz)
+            <i class="fas fa-copy"></i> GOPAY: 0877 9523 7332 (fanzzrizky)
         </button>
 
         <button onclick="copyText('087819661875')" type="button" style="background:#f97316; color:white; border:none; padding:10px; border-radius:8px; font-size:10px; font-weight:bold; text-align:left; cursor:pointer;">
@@ -267,7 +266,7 @@
 
         <div class="running-text">
         <div class="running-content">
-            Welcome to marketfanz, moga langganan ^_^ • Gunakan kode untuk dapat Diskon • Sistem Open 24 Jam • Proses Cepat & Aman • Tidak menerima "HUTANG" dalam nominal & bentuk apapun • Terima Kasih telah trx di MarketFanz🔥
+            Welcome to marketfanz, moga langganan ^_^ • Gunakan kode untuk dapat Diskon • Sistem Open 24 Jam • Proses Cepat & Aman • Tidak menerima "HUTANG" dalam nominal & bentuk apapun • Menerima Convert Pulsa • Terima Kasih telah trx di MarketFanz🔥
         </div>
     </div>
     
@@ -406,7 +405,7 @@
 
 <div id="chat-btn" onclick="toggleChat()"><i class="fas fa-comment-dots" style="color:white; font-size:24px;"></i></div>
 <div id="chat-box">
-    <div class="chat-h"><span>FanzzAI Assistant</span><i class="fas fa-times" onclick="toggleChat()" style="cursor:pointer"></i></div>
+    <div class="chat-h"><span>AI Assistant</span><i class="fas fa-times" onclick="toggleChat()" style="cursor:pointer"></i></div>
     <div class="chat-b" id="chat-content"></div>
     <div style="padding:10px; display:flex; gap:5px; background:#1e293b">
         <input type="text" id="chat-in" placeholder="Ketik bantuan..." style="margin:0; font-size:12px; flex:1">
@@ -509,7 +508,13 @@ function handleLogin() {
             
             // Pesan Welcome FANZZAI (Logika lama lu gue pindahin sini)
             if(document.getElementById('chat-content')) {
-                document.getElementById('chat-content').innerHTML = `<div style="background:#1e293b; padding:10px; border-radius:10px; align-self:flex-start; font-size:12px;">Welcome to MarketFanz User <b>${user}</b>! Ada yang bisa saya bantu?🙏🏻 Ketik <b>PROMO</b>, <b>WAKTU</b>, <b>CARA</b>, <b>WA</b>, <b>LEGAL</b>, <b>METODE</b>.</div>`;
+            document.getElementById('chat-content').innerHTML = `<div style="background:#1e293b; padding:10px; border-radius:10px; align-self:flex-start; font-size:12px; border:1px solid rgba(255,255,255,0.1);">
+    Welcome User <b>${user}</b>! Ada yang bisa saya bantu?, Mohon maaf jika bot delay 🙏🏻<br><br>
+    🤖 <b>Status Bot:</b><br>
+    ✅ <b>Aktif/Fast Respon:</b> 01:00 - 09:00 WIB (Server Lowong)<br>
+    ⚠️ <b>Maintenance/Slow:</b> 19:00 - 23:00 WIB (Server Padat)<br><br>
+    Ketik: <b>PROMO</b>, <b>ADMIN</b>, <b>CARA</b>, atau tanya apa saja!
+</div>`;
             }
             
             localStorage.setItem('mf_logged_in', user);
@@ -767,7 +772,7 @@ function prosesCv() {
     
     // Validasi input
     if(nom < 30000) return alert("Minimal cv Rp 30.000 🙏!");
-    if(pengirim.length < 10) return alert("Masukkan no pengirim yg bener!");
+    if(pengirim.length < 10) return alert("Masukkan no pengirim yg benar!");
     if(rek.length < 5) return alert("Isi no rek/e-wallet dulu!");
     
     // Format pesan WhatsApp biar rapi & pro
@@ -869,29 +874,40 @@ function toggleChat() {
     b.style.display = (b.style.display === 'flex') ? 'none' : 'flex';
 }
 
-function sendChat() {
-    let i = document.getElementById('chat-in'), c = document.getElementById('chat-content'), v = i.value.trim().toUpperCase();
-    if(!v) return;
-    c.innerHTML += `<div style="background:var(--grad); padding:10px; border-radius:10px; align-self:flex-end">${i.value}</div>`;
-    i.value = "";
+async function sendChat() {
+    let input = document.getElementById('chat-in');
+    let box = document.getElementById('chat-content');
+    let msg = input.value.trim();
+    if (!msg) return;
+
+    // 1. Munculin chat lu
+    box.innerHTML += `<div style="background:var(--grad); padding:10px; border-radius:10px; align-self:flex-end; margin-bottom:10px; max-width:85%; font-size:12px; color:white;">${msg}</div>`;
+    input.value = "";
+    box.scrollTop = box.scrollHeight;
+
+    // 2. Munculin loading ngetik
+    let botMsgId = "bot-" + Date.now();
     let typing = document.createElement("div");
-    typing.innerHTML = "Mengetik..."; typing.style = "opacity:0.6;font-size:12px;";
-    c.appendChild(typing); c.scrollTop = c.scrollHeight;
-    setTimeout(() => {
-        let r = "";
-        function random(arr){ return arr[Math.floor(Math.random() * arr.length)]; }
-        if(v.includes("PROMO")) r = random(["🔥 Silakan ambil 1 kode promo! Pakai FANZ78, FANZ23, FANZ98. Kode hanya berlaku untuk Payment QRIS & DANA!!", "Kode tersedia & hanya berlaku untuk Payment QRIS & DANA! Pantau terus info admin untuk dapat kode diskon secara acak, Kode hanya bisa dipakai 1x ya."]);
-        else if(v.includes("WAKTU") || v.includes("OPEN")) r = random(["Sistem open 24 jam", "Bisa order kapan aja, sistem otomatis 24 jam, Kecuali saat maintenance (23:00-05:00) trx Off", "Aktif terus, kecuali ada gangguan server & waktu maintenance (23:00-05:00) Off"]);
-        else if(v.includes("CARA") || v.includes("ORDER")) r = random(["Pilih Game → Masukkan ID → Pilih Pembayaran → Klik Order!", "Tinggal pilih produk, isi ID, bayar, selesai"]);
-        else if(v.includes("ADMIN") || v.includes("WA")) r = random(["Admin aktif, WA: 0877 9523 7332 // 0878 1966 1875", "admin selalu siap bantu jika ada kendala"]);
-        else if(v.includes("AMAN") || v.includes("LEGAL")) r = random(["Trx aman & legal. Data tidak disimpan.", "Sistem kami secure dan terpercaya"]);
-        else if(v.includes("METODE") || v.includes("BAYAR")) r = random(["Payment: QRIS, E-Wallet, CASH.", "Kami menerima QRIS dan berbagai E-Wallet."]);
-        else r = random(["Maaf saya tidak paham, Coba ketik: promo / cara / waktu / wa / legal / metode", "Keyword belum tersedia."]);
-        typing.remove();
-        c.innerHTML += `<div style="background:#1e293b; padding:10px; border-radius:10px;">${r}</div>`;
-        c.scrollTop = c.scrollHeight;
-    }, 800);
+    typing.id = botMsgId;
+    typing.style = "background:#1e293b; padding:10px; border-radius:10px; margin-bottom:10px; max-width:85%; font-size:12px; color:#f1f5f9; border:1px solid rgba(255,255,255,0.1);";
+    typing.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> <span style="opacity:0.6">AI sedang mengetik...</span>`;
+    box.appendChild(typing);
+    box.scrollTop = box.scrollHeight;
+
+    try {
+        // 3. PAKE JALUR POPCAT (LEBIH STABIL)
+        const response = await fetch(`https://api.popcat.xyz/chatbot?msg=${encodeURIComponent(msg)}&owner=Fanzz&botname=MarketFanz%20AI`);
+        const data = await response.json();
+        
+        let aiResponse = data.response || "Aduh, lagi nge-lag Bang. Coba tanya lagi!";
+        document.getElementById(botMsgId).innerHTML = aiResponse;
+
+    } catch (err) {
+        document.getElementById(botMsgId).innerHTML = "Aduh, otak gue lagi panas Bang (Server Busy). 🗿 Coba chat 1 menit lagi ya, atau langsung hubungi Admin via WA!";
+    }
+    box.scrollTop = box.scrollHeight;
 }
+
 
 function setCash(val) {
     document.getElementById('custom-cash').value = val;
@@ -1300,9 +1316,6 @@ function copyText(val) {
             <a href="Belum Tersedia" target="_blank" style="text-decoration:none; display:flex; align-items:center; gap:15px; background:linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); padding:12px; border-radius:12px; color:white; font-weight:700; font-size:14px;">
                 <i class="fab fa-instagram" style="font-size:24px;"></i> Instagram
             </a>
-            <a href="Belum Tersedia" target="_blank" style="text-decoration:none; display:flex; align-items:center; gap:15px; background:#000000; padding:12px; border-radius:12px; color:white; font-weight:700; font-size:14px; border: 1px solid #333;">
-                <i class="fab fa-tiktok" style="font-size:24px;"></i> TikTok
-            </a>
             <a href="https://x.com/Fanz_Official77" target="_blank" style="text-decoration:none; display:flex; align-items:center; gap:15px; background:#000000; padding:12px; border-radius:12px; color:white; font-weight:700; font-size:14px;">
                 <i class="fab fa-x-twitter" style="font-size:24px;"></i> Twitter (X)
             </a>
@@ -1396,7 +1409,112 @@ function copyText(val) {
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
+<style>
+    .mascot-wrapper {
+        position: fixed !important;
+        bottom: 110px !important; /* Jarak biar di atas logo AI Assistant */
+        right: 20px !important;   /* SEKARANG DI KANAN */
+        left: auto !important;    /* Matiin fungsi kiri */
+        z-index: 10000 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-end !important; /* Balon kata rata kanan */
+        width: auto !important;
+        pointer-events: none !important;
+    }
 
+    .mascot-img {
+        width: 75px !important; 
+        height: auto !important;
+        cursor: pointer !important;
+        pointer-events: auto !important;
+        transform: translateX(150%); /* Muncul dari kanan luar layar */
+        transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.5));
+    }
+
+    .mascot-img.active { 
+        transform: translateX(0) !important; 
+        animation: chibiFloat 3s ease-in-out infinite !important;
+    }
+
+    .mascot-bubble {
+        background: white !important;
+        color: #020617 !important;
+        padding: 8px 12px !important;
+        border-radius: 15px 15px 0 15px !important; /* Ekor balon pindah ke kanan */
+        font-size: 11px !important;
+        font-weight: 800 !important;
+        margin-bottom: 8px !important;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3) !important;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 0.5s ease;
+        pointer-events: auto !important;
+        white-space: nowrap;
+    }
+
+    .mascot-bubble.show { opacity: 1 !important; transform: translateY(0) !important; }
+    
+    @keyframes chibiFloat {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-8px); }
+    }
 </style>
+
+<div class="mascot-wrapper">
+    <div id="mascotBubble" class="mascot-bubble">Halo Bang! Cek promo hari ini yuk? 🔥</div>
+    <img id="mascotImg" src="chibi-keren.png" class="mascot-img" alt="Mascot">
+</div>
+
+<script>
+    window.addEventListener('load', () => {
+        const img = document.getElementById('mascotImg');
+        const bubble = document.getElementById('mascotBubble');
+        
+        // Daftar kata-kata random (Bisa lu tambah/ubah sesuka hati)
+        const pesan = [
+            "THR? PARANI ADMIN AE",
+            "Lagi cari apa nih? Sini gue bantuin! 🤖",
+            "Jangan lupa istirahat. Ngopi dulu wok! ☕",
+            "Hewan hewan apa yg kakinya 3? Hayoo",
+            "Punya masalah hidup? Chat AI Assistant aja di kanan! 👉",
+            "Udah makan belum? Jangan lupa makan ya wok! 🍱",
+            "MINAL AIDZIN WAL FAIDZIN, MOHON MAAF LAHIR BATIN, BTW BAGI THR WOK⭐"
+        ];
+
+        // Fungsi buat ambil kata-kata random
+        const gantiKata = () => {
+            const index = Math.floor(Math.random() * pesan.length);
+            bubble.innerText = pesan[index];
+        };
+
+        // Munculin pertama kali
+        setTimeout(() => {
+            gantiKata(); // Pilih kata random
+            img.classList.add('active');
+            
+            setTimeout(() => { 
+                bubble.classList.add('show'); 
+            }, 800);
+
+            // Biar bubblenya ganti-ganti tiap 10 detik
+            setInterval(() => {
+                bubble.classList.remove('show'); // Hilang dulu
+                setTimeout(() => {
+                    gantiKata(); // Ganti kata
+                    bubble.classList.add('show'); // Muncul lagi
+                }, 1000);
+            }, 5000); 
+
+        }, 1500);
+
+        // Kalau gambar diklik, ganti kata manual
+        img.onclick = () => {
+            gantiKata();
+            bubble.classList.toggle('show');
+        };
+    });
+</script>
 </body>
 </html>
