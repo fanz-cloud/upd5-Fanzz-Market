@@ -143,7 +143,7 @@
         
         <div id="form-register" style="display: none;">
             <input type="text" id="r-user" placeholder="Username" style="width: 100%; padding: 15px; background: #0f172a; border: 1px solid #334155; border-radius: 12px; color: white; margin-bottom: 15px; outline: none;">
-            <input type="number" id="r-wa" placeholder="Nomor WhatsApp (08xxx)" style="width: 100%; padding: 15px; background: #0f172a; border: 1px solid #334155; border-radius: 12px; color: white; margin-bottom: 15px; outline: none;">
+            <input type="number" id="r-wa" placeholder="No WhatsApp (08xx)" style="width: 100%; padding: 15px; background: #0f172a; border: 1px solid #334155; border-radius: 12px; color: white; margin-bottom: 15px; outline: none;">
          <div style="position: relative; margin-bottom: 20px;">
     <input type="password" id="r-pass" placeholder="Buat Password" style="width: 100%; padding: 15px 45px 15px 15px; background: #0f172a; border: 1px solid #334155; border-radius: 12px; color: white; outline: none;">
     <i class="fas fa-eye" id="toggle-r-pass" onclick="togglePass('r-pass', this)" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #94a3b8; cursor: pointer;"></i>
@@ -162,14 +162,56 @@
 <div id="order-modal">
   <div class="modal-box">
     <h3 style="margin-top:0;color:var(--accent)">Konfirmasi Pesanan</h3>
-   <div id="qr-container" style="display:none; text-align:center; margin-bottom:15px; background:white; padding:10px; border-radius:15px;">
-        <p style="color:#000; font-size:10px; font-weight:800; margin-bottom:5px;">SCAN QR DI BAWAH INI</p>
-        <img src="qris.jpg" style="width:100%; max-width:180px; border-radius:5px;">
-        <p style="color:#64748b; font-size:9px; margin-top:5px;">tf sesuai nominal!!</p>
+
+    <div id="qr-container" style="display:none; text-align:center; margin-bottom:15px; background:white; padding:15px; border-radius:20px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+        <p style="color:#0f172a; font-size:11px; font-weight:800; margin-top:0; margin-bottom:10px; text-transform:uppercase; letter-spacing:1px;">
+            ⚡ PILIH QR⚡
+        </p>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: center;">
+            
+            <div style="text-align:center; padding: 5px; border: 1px solid #e2e8f0; border-radius: 10px;">
+                <p style="color:#64748b; font-size:9px; font-weight:700; margin:0 0 5px 0;">UTAMA</p>
+                <img src="qris_1.jpg" alt="QRIS 1" style="width:100%; max-width:130px; border-radius:8px;">
+            </div>
+
+            <div style="text-align:center; padding: 5px; border: 1px solid #e2e8f0; border-radius: 10px;">
+                <p style="color:#64748b; font-size:9px; font-weight:700; margin:0 0 5px 0;">CADANGAN</p>
+                <img src="qris_2.jpg" alt="QRIS 2" style="width:100%; max-width:130px; border-radius:8px;">
+            </div>
+
+        </div>
+
+        <p style="color:#ef4444; font-size:10px; font-weight:800; margin-top:10px; margin-bottom:0; background:rgba(239,68,68,0.1); padding:5px; border-radius:5px;">
+            ⚠️ TF SESUAI NOMINAL! JNGN KURANG/LEBIH ⚠️
+        </p>
     </div>
+
+
+<div id="wallet-manual-container" style="display:none; margin-bottom:15px; background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; border:1px solid var(--accent);">
+    <p style="font-size:11px; margin-top:0; color:var(--accent); font-weight:700; text-align:center;">KLIK NOMOR UNTUK SALIN:</p>
+    
+    <div style="display:flex; flex-direction:column; gap:8px;">
+        <button onclick="copyText('087819661875')" type="button" style="background:#22d3ee; color:black; border:none; padding:10px; border-radius:8px; font-size:10px; font-weight:bold; text-align:left; cursor:pointer;">
+            <i class="fas fa-copy"></i> DANA 1: 0878 1966 1875 (faizzrizky56)
+        </button>
+        <button onclick="copyText('087795237332')" type="button" style="background:#22d3ee; color:black; border:none; padding:10px; border-radius:8px; font-size:10px; font-weight:bold; text-align:left; cursor:pointer;">
+            <i class="fas fa-copy"></i> DANA 2: 0877 9523 7332 (MarketFanzz)
+        </button>
+
+        <button onclick="copyText('087795237332')" type="button" style="background:#22c55e; color:white; border:none; padding:10px; border-radius:8px; font-size:10px; font-weight:bold; text-align:left; cursor:pointer;">
+            <i class="fas fa-copy"></i> GOPAY: 0877 9523 7332 (MarketFanzz)
+        </button>
+
+        <button onclick="copyText('087819661875')" type="button" style="background:#f97316; color:white; border:none; padding:10px; border-radius:8px; font-size:10px; font-weight:bold; text-align:left; cursor:pointer;">
+            <i class="fas fa-copy"></i> SHOPEEPAY: 0878 1966 1875 (market_fanz32)
+        </button>
+    </div>
+</div>
+
+   
     <div id="cash-options" style="display:none; margin-bottom:15px; background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; border:1px solid rgba(255,255,255,0.1);">
     <p style="font-size:11px; margin-top:0; color:var(--accent); font-weight:700;">Pilih Nominal Pembayaran:</p>
-
     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-bottom:10px;">
         <button onclick="setCashPas()" type="button" style="background:var(--accent); color:black; border:none; padding:8px; border-radius:8px; font-size:11px; font-weight:bold;">✨ UANG PAS</button>
        <button onclick="setCash(10000)" style="background:var(--accent); color:black; border:none; padding:8px; border-radius:8px; font-size:11px; font-weight:bold;">Rp 10.000</button>
@@ -178,7 +220,7 @@
         <button onclick="setCash(100000)" style="background:var(--accent); color:black; border:none; padding:8px; border-radius:8px; font-size:11px; font-weight:bold;">Rp 100.000</button>
     </div>
 
-    <input type="number" id="custom-cash" placeholder="Atau masukkan nominal lain..." 
+    <input type="number" id="custom-cash" placeholder="masukkan nom lain" 
            style="width:100%; padding:10px; border-radius:8px; border:1px solid #334155; background:#0f172a; color:white; font-size:12px;">
 </div>
 
@@ -277,8 +319,8 @@
 
     <div id="section-main-order">
         <div class="section-title">2. Payment</div>
-        <div class="pay-grid">
-            <div class="pay-card" onclick="setPay('DANA', 500, this)"><i class="fas fa-wallet"></i><div>DANA</div><span class="fee-tag">+500</span></div>
+<div class="pay-grid">
+            <div class="pay-card" onclick="setPay('ALL PAYMENT', 500, this)"><i class="fas fa-wallet"></i><div>ALL PAYMENT</div><span class="fee-tag">+500</span></div>
             <div class="pay-card" onclick="setPay('QRIS', 800, this)"><i class="fas fa-qrcode"></i><div>QRIS</div><span class="fee-tag">+800</span></div>
             <div class="pay-card" onclick="setPay('CASH', 1500, this)"><i class="fas fa-money-bill-wave"></i><div>CASH</div><span class="fee-tag">+1,5rb</span></div>
         </div>
@@ -892,20 +934,25 @@ function orderNow() {
     // 3. MASUKKIN KE HTML (PENTING!)
     document.getElementById('modal-detail').innerHTML = detail;
     
-    // 4. Logika tampilkan kotak QR atau CASH
+    // 4. Logika Tampilkan Kotak (VERSI SIMPEL)
     const qrBox = document.getElementById('qr-container');
+    const walletBox = document.getElementById('wallet-manual-container');
     const cashBox = document.getElementById('cash-options');
 
+    // Sembunyikan semua dulu setiap kali modal dibuka
+    qrBox.style.display = "none";
+    walletBox.style.display = "none";
+    cashBox.style.display = "none";
+
+    // Pilih mana yang mau dimunculin
     if (pay === "QRIS") {
-        qrBox.style.display = "block";
-        cashBox.style.display = "none";
+        qrBox.style.display = "block"; // Munculin Gambar QR
+    } else if (pay === "ALL PAYMENT") {
+        walletBox.style.display = "block"; // Munculin Daftar Nomor HP (DANA, Gopay, Shopee)
     } else if (pay === "CASH") {
-        cashBox.style.display = "block";
-        qrBox.style.display = "none";
-    } else {
-        qrBox.style.display = "none";
-        cashBox.style.display = "none";
+        cashBox.style.display = "block"; // Munculin Opsi Uang Pas
     }
+
 
     document.getElementById('order-modal').style.display = 'flex';
 }
@@ -914,18 +961,18 @@ function closeModal() {
     document.getElementById('order-modal').style.display = 'none'; 
 }
 
-
-// GANTI FUNGSI CONFIRM ORDER BIAR SINKRON SAMA LOGIN
 function confirmOrder(){
     let btn = document.getElementById("btn-confirm");
     let id = document.getElementById('target').value;
     let totalBayar = document.getElementById('total-txt').innerText;
     
-    // Ambil Username dari Login (Kunci: mf_logged_in)
+    // 1. Ambil Username dari Login
     let userAktif = localStorage.getItem('mf_logged_in') || "Guest";
     
+    // 2. Efek Animasi Tombol
     btn.innerText = "Memproses..."; btn.disabled = true;
     
+    // 3. Simpan ke Riwayat (History)
     const data = JSON.parse(localStorage.getItem('fanz_history')) || [];
     data.push({ 
         game: game.toUpperCase(), 
@@ -936,13 +983,28 @@ function confirmOrder(){
     });
     localStorage.setItem('fanz_history', JSON.stringify(data));
     
-    // Langsung update riwayat sebelum ke WA
+    // Update tampilan riwayat
     muatRiwayat(); 
 
+    // --- BAGIAN TELEGRAM (START) ---
+   const token = '8550703377:AAHrUA-iuQ2_mpGmXDrwiqHYhwgcX0TFsDo';
+   const chatId = '6894541733';
+    const detailPesan = `🔔 <b>ORDERAN BARU!</b>\n👤 User: ${userAktif}\n🎮 Game: ${game.toUpperCase()}\n💎 Item: ${item}\n🆔 ID: ${id}\n💳 Pay: ${pay}\n💰 Total: ${totalBayar}`;
+    
+    const urlTele = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(detailPesan)}&parse_mode=html`;
+    
+    fetch(urlTele).catch(err => console.log("Gagal lapor Tele"));
+    // --- BAGIAN TELEGRAM (END) ---
+
+    // 4. Delay sebentar biar animasinya kelihatan, baru buka WA
     setTimeout(() => {
         let msg = `ORDER TOPUP%0AUser: ${userAktif}%0ALayanan: ${game.toUpperCase()}%0AItem: ${item}%0AID: ${id}%0ABayar: ${pay}%0ATotal: ${totalBayar}`;
         window.open(`https://wa.me/6287795237332?text=${msg}`);
-        btn.innerText = "Konfirmasi"; btn.disabled = false; closeModal();
+        
+        // Balikin tombol ke awal
+        btn.innerText = "Konfirmasi"; 
+        btn.disabled = false; 
+        closeModal();
     }, 800);
 }
 
@@ -1209,6 +1271,15 @@ function toggleAccordion(el) {
         content.style.display = "block";
         icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
     }
+}
+
+function copyText(val) {
+    navigator.clipboard.writeText(val).then(() => {
+        // Efek alert simpel
+        alert("✅ Nomor berhasil disalin: " + val);
+    }).catch(err => {
+        console.error('Gagal salin: ', err);
+    });
 }
 </script>
 
