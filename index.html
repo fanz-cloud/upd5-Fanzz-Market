@@ -116,6 +116,66 @@
     border-color: #10b981 !important;
     box-shadow: 0 0 10px rgba(16, 185, 129, 0.2;
 }
+
+        /* KODE MAINTENANCE NYA FAIZ */
+        #maint-box {
+            display: none; /* Sembunyi dulu, muncul kalo maint aktif */
+            background: var(--card);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid #ef4444; /* Merah Maint */
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+            margin-bottom: 20px;
+            animation: pulse-maint 2s infinite;
+        }
+        @keyframes pulse-maint {
+            0% { box-shadow: 0 0 10px rgba(239, 68, 68, 0.3); }
+            50% { box-shadow: 0 0 25px rgba(239, 68, 68, 0.6); }
+            100% { box-shadow: 0 0 10px rgba(239, 68, 68, 0.3); }
+        }
+        .maint-title {
+            color: #ef4444;
+            font-weight: 800;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .maint-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .maint-time-card {
+            background: rgba(15, 23, 42, 0.8);
+            padding: 15px 5px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .maint-val {
+            font-size: 28px;
+            font-weight: 800;
+            color: white;
+            font-family: monospace;
+        }
+        .maint-lab {
+            font-size: 9px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .maint-status {
+            background: #ef4444;
+            color: white;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 8px;
+            border-radius: 10px;
+            display: inline-block;
+        }
     </style>
 </head>
 
@@ -317,6 +377,26 @@
 </div>
 
     <div id="section-main-order">
+               <div id="maint-box">
+            <div class="maint-title"><i class="fas fa-tools"></i> MAINTENANCE BERLANGSUNG</div>
+            
+            <div class="maint-grid">
+                <div class="maint-time-card">
+                    <div id="m-jam" class="maint-val">00</div>
+                    <div class="maint-lab">Jam</div>
+                </div>
+                <div class="maint-time-card">
+                    <div id="m-menit" class="maint-val">00</div>
+                    <div class="maint-lab">Menit</div>
+                </div>
+                <div class="maint-time-card">
+                    <div id="m-detik" class="maint-val">00</div>
+                    <div class="maint-lab">Detik</div>
+                </div>
+            </div>
+            
+            <div id="m-selesai" class="maint-status">Selesai pada: 00:00:00</div>
+        </div>
         <div class="section-title">2. Payment</div>
 <div class="pay-grid">
             <div class="pay-card" onclick="setPay('ALL PAYMENT', 500, this)"><i class="fas fa-wallet"></i><div>ALL PAYMENT</div><span class="fee-tag">+500</span></div>
@@ -381,26 +461,6 @@
     </div>
     <span style="font-size: 11px; font-weight: 700;">FAQ</span>
   </div>
-</div>
-
-
-    <div class="section-title" style="text-align:center; border:none; margin-top:40px">Developer Profile</div>
-    <div class="input-box" style="margin-bottom: 20px; border: 1px solid rgba(34, 211, 238, 0.3);">
-        <div style="display: flex; align-items: center; gap: 15px;">
-            <div style="width: 50px; height: 50px; background: var(--grad); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                <i class="fas fa-user-code" style="color: white; font-size: 20px;"></i>
-            </div>
-            <div style="font-size: 12px; line-height: 1.5;">
-                <div style="font-weight: 800; color: var(--accent); font-size: 14px;">Faiz R</div>
-                <div style="opacity: 0.8;">Tiers: <span style="font-weight: 600;">SMK</span></div>
-                <div style="opacity: 0.8;">Major: <span style="font-weight: 600;">BD (Bisnis Daring)</span></div>
-                <div style="opacity: 0.8;">Skill: <span style="font-weight: 600;">PROMOTION & SERVICE</span></div>
-                <div style="opacity: 0.8;">Motivation: <span style="font-weight: 600;">BERANI GAGAL UTK MENCAPAI KESUKSESAN</span></div>
-            </div>
-        </div>
-    </div>
-    
-
 </div>
 
 <div id="chat-btn" onclick="toggleChat()"><i class="fas fa-comment-dots" style="color:white; font-size:24px;"></i></div>
@@ -977,6 +1037,7 @@ function closeModal() {
     document.getElementById('order-modal').style.display = 'none'; 
 }
 
+
 function confirmOrder(){
     let btn = document.getElementById("btn-confirm");
     let id = document.getElementById('target').value;
@@ -1367,7 +1428,7 @@ function copyText(val) {
                     <i class="fas fa-chevron-down" style="font-size:10px; color: var(--accent); transition: 0.3s;"></i>
                 </div>
                 <div style="display:none; padding:10px 15px 15px; font-size:11px; color:#94a3b8; border-top: 1px solid rgba(255,255,255,0.05);">
-                    Belum, web ini belum menyediakan proses secara instan karna tidak ada API + Backend & masih dalam tahap Perkembangan, Tapi anda bisa melakukan trx dg proses manual.
+                    Web ini belum menyediakan proses secara instan karna tidak ada API + Backend & masih dalam tahap Perkembangan, Tapi anda bisa melakukan trx dg proses manual.
                 </div>
             </div>
 
@@ -1387,7 +1448,7 @@ function copyText(val) {
                     <i class="fas fa-chevron-down" style="font-size:10px; color: var(--accent); transition: 0.3s;"></i>
                 </div>
                 <div style="display:none; padding:10px 15px 15px; font-size:11px; color:#94a3b8; border-top: 1px solid rgba(255,255,255,0.05);">
-                    Proses 1-5 menit. Jika dalam 10 menit belum masuk, silakan hubungi CS via WhatsApp dengan menyertakan bukti Trx.
+                    Proses 1-5 menit. Jika dalam 10 menit belum masuk, silakan hubungi CS via WhatsApp dengan menyertakan bukti tf Trx.
                 </div>
             </div>
 
@@ -1515,6 +1576,74 @@ function copyText(val) {
             bubble.classList.toggle('show');
         };
     });
+    
+   // --- JURUS MAINTENANCE NYA FAIZ ---
+const maintStart = "23:00:00"; 
+const maintEnd   = "04:30:00";
+
+function hitungMaint() {
+    const now = new Date();
+    const jamSekarang = now.toLocaleTimeString('id-ID', { hour12: false });
+    
+    function toSeconds(t) {
+        const [h, m, s] = t.split(':');
+        return parseInt(h) * 3600 + parseInt(m) * 60 + parseInt(s);
+    }
+    
+    const sNow = toSeconds(jamSekarang);
+    const sStart = toSeconds(maintStart);
+    const sEnd = toSeconds(maintEnd);
+    
+    const box = document.getElementById('maint-box');
+    const orderBtn = document.querySelector('.footer-bar button'); 
+    
+    let isMaint = false;
+    if (sStart > sEnd) {
+        isMaint = sNow >= sStart || sNow < sEnd;
+    } else {
+        isMaint = sNow >= sStart && sNow < sEnd;
+    }
+    
+    if (isMaint) {
+        if(box) box.style.display = 'block';
+        if(orderBtn) {
+            orderBtn.disabled = true;
+            orderBtn.style.background = '#334155';
+            orderBtn.innerText = "MAINTENANCE";
+        }
+        
+        let sisaDetik;
+        if (sNow >= sStart) {
+            sisaDetik = (24 * 3600 - sNow) + sEnd;
+        } else {
+            sisaDetik = sEnd - sNow;
+        }
+        
+        const h = Math.floor(sisaDetik / 3600);
+        const m = Math.floor((sisaDetik % 3600) / 60);
+        const s = sisaDetik % 60;
+        
+        const format = (n) => n.toString().padStart(2, '0');
+        
+        if(document.getElementById('m-jam')) document.getElementById('m-jam').innerText = format(h);
+        if(document.getElementById('m-menit')) document.getElementById('m-menit').innerText = format(m);
+        if(document.getElementById('m-detik')) document.getElementById('m-detik').innerText = format(s);
+        
+        if(document.getElementById('m-selesai')) {
+            document.getElementById('m-selesai').innerText = `Selesai pada jam: ${maintEnd} WIB`;
+        }
+    } else {
+        if(box) box.style.display = 'none';
+        if(orderBtn && orderBtn.disabled) {
+            orderBtn.disabled = false;
+            orderBtn.style.background = 'var(--grad)';
+            orderBtn.innerText = "ORDER";
+        }
+    }
+}
+
+setInterval(hitungMaint, 1000);
+hitungMaint();
 </script>
 </body>
 </html>
